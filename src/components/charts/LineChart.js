@@ -1,6 +1,6 @@
 import React from 'react'
-import {d3,extent,max} from "d3";
-import {scaleLinear,scaleTime} from "d3-scale"
+import {d3,extent,max,range,format} from "d3";
+import {scaleLinear,scaleTime,scaleOrdinal} from "d3-scale"
 import {line} from "d3-shape"
 import { axisBottom, axisLeft } from 'd3-axis';
 
@@ -22,8 +22,11 @@ export default class LineChart extends React.Component {
        const width = 960 - margin.left - margin.right
        const height = 500 - margin.top - margin.bottom
 
-       const x = scaleTime().range([0, width]);
-       const y = scaleLinear().range([height, 0]);
+       const ticks = range(0, width, (width / data.length))
+       const x = scaleOrdinal().range(ticks)
+       const y = scaleLinear().domain([0, max(data, (d) => d.count)]).range([height, 0])
+    //    const x = scaleLinear().range([0, width]);
+    //    const y = scaleLinear().range([height, 0]);
        const valueline = line()
                             .x(function(d) { return x(d.label); })
                             .y(function(d) { return y(d.count); })
@@ -31,34 +34,27 @@ export default class LineChart extends React.Component {
         x.domain(extent(data, function(d) { return d.label; }))
         y.domain([0, max(data, function(d) { return d.count; })])
 
-        const xTicks = scaleTime().ticks()
-        const xTickElements = xTicks.map((tick, index) => {
-            const position = x(tick)
-            const translate =`translate(0, ${position})`
-            return (
-              <g key={`${tick}+${index}`} className="tick" transform={translate}>
-                <text>{tick}</text>
-              </g>
-            )
-        })
-        const a = ["hello","good"]
-
-        const mytest = a.map((msg,index) => {
-            console.log(msg,index)
-            return(
-                <h1 key={"h"+index}>{msg}</h1>
-            )
-        })
+        const xTicks = scaleLinear().ticks()
+        // const xTickElements = xTicks.map((tick, index) => {
+        //     const position = x(tick)
+        //     const translate =`translate(400, ${position})`
+        //     return (
+        //       <g key={`${tick}+${index}`} className="tick" transform={translate}>
+        //         <line stroke="#000" y2="6"></line>
+        //         <text fill="#000" y="9" dy="0.71em">{tick}</text>
+        //       </g>
+        //
+        //
+        //     )
+        // })
        return (
-
            <div>
                <svg id="lineChartMain" width={width} height={height}>
                    <g transform = {`translate(${margin.left},${margin.top})`}>
+                       	<YAxis y={40} labels={y.ticks().reverse()} start={15} end={height} />
                        <path className="line" d={valueline(data)} strokeLinecap="round"/>
-                       <g transform = {`translate(0, ${height})`} >
-                           <g>
 
-                           </g>
+                       <g transform = {`translate(0, ${height})`} >
                            <text transform = {`translate(${(width/2)},${height + margin.top + 20})`} style={{textAnchor: "middle"}}>Date</text>
                        </g>
                        <text transform = "rotate(-90)" y={0 - margin.left} x={0 - (height / 2)} dy="1em" style={{textAnchor: "middle"}}>Value</text>
@@ -97,4 +93,42 @@ export default class LineChart extends React.Component {
 </g></svg>
 )*/}
 }
+}
+class YAxis extends React.Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    //D3 mathy bits
+    let ticks = range(0, this.props.end, (this.props.end / this.props.labels.length))
+
+    let lines = []
+    ticks.forEach((tick, index) => {
+      lines.push(<line style={{stroke: "steelblue",strokeWidth: "1px"}} y1={tick} x1={this.props.y} y2={tick} x2={this.props.y - 4}  />)
+    })
+
+    let columnLables = []
+    ticks.forEach((tick, index) => {
+      columnLables.push(<text style={{
+        fontSize: "0.8em",
+        fill: "steelblue",
+        textAnchor: "end"}} y={tick + 6} x={this.props.y - 6} font-family="Verdana" >{this.props.labels[index]}</text>)
+    })
+
+
+    return(
+      <g>
+	      <g className="y_labels" transform={`translate(${-5},${17})`}>
+	      <line x1={this.props.y} y1={this.props.start} y2={this.props.end} x2={this.props.y} style={{stroke: "steelblue",strokeWidth: "1px"}} />
+	      </g>
+	      <g className="y_labels" transform={`translate(${-5},${51})`}>
+	        { columnLables }
+	        { lines }
+	      </g>
+      </g>
+    )
+  }
+
 }

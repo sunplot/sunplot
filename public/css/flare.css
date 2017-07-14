@@ -41,3 +41,12 @@ body{
 .arc path {
   stroke: #fff;
 }
+
+.bar rect {
+  fill: steelblue;
+}
+
+.bar text {
+  fill: #fff;
+  font: 10px sans-serif;
+}

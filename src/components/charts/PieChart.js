@@ -15,7 +15,7 @@ export default class PieChart extends React.Component {
 
     render(){
         let data = []
-        if(this.props.data['result-set']!== undefined){
+        if(this.props.data!== undefined && this.props.data['result-set']!== undefined){
             data = this.props.data['result-set'].docs
         }
 

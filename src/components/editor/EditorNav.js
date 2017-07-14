@@ -9,11 +9,11 @@ import {sqlCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
 import SQLExecuteButton from './SQLExecuteButton'
 import StreamExecuteButton from './StreamExecuteButton'
+import ActionHome from 'material-ui/svg-icons/content/link';
 
 class EditorNav extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props)
     }
     getButton(props){
         if(this.props.editorMode === "sql"){
@@ -32,6 +32,13 @@ class EditorNav extends React.Component {
                     <ToolbarGroup firstChild={true}>
                     </ToolbarGroup>
                     <ToolbarGroup>
+
+                        <a href={this.props.url}>
+                            <IconButton tooltip="SVG Icon" tooltip={this.props.url}>
+                            <ActionHome style={{ marginRight: 24}} />
+                            </IconButton>
+                            </a>
+                        <ToolbarSeparator />
                         {this.getButton(this.props)}
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>
                     </ToolbarGroup>

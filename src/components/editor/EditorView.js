@@ -19,7 +19,7 @@ class EditorView extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            query: "select actor_1_name ,sum(gross) as total from films group by  actor_1_name order by sum(gross) desc limit 10",
+            query: "select director_name,sum(gross) from films group by director_name order by sum(gross) desc limit 10",
             docs : []
         };
     }
@@ -52,24 +52,24 @@ class EditorView extends React.Component{
                             options={options} />
                     </Paper>
                 </div>
-                <EditorNav query={this.state.query} editorMode={this.props.mode}/>
+                <EditorNav query={this.state.query} editorMode={this.props.mode} url={this.props.data.url}/>
                 <Tabs>
                     <Tab label="Table" >
                         <div>
-                            <EditorTable data={this.props.docs} />
+                            <EditorTable data={this.props.data} />
                         </div>
                     </Tab>
                     <Tab label="JSON" >
-                        <div><pre>{JSON.stringify(this.props.docs, null, 2) }</pre></div>;
+                        <div><pre>{JSON.stringify(this.props.data.docs, null, 2) }</pre></div>;
                     </Tab>
                     <Tab label="Charts" >
                         <Tabs>
                             <Tab label="Line" >
-                                <div><LineChart data={this.props.docs}/></div>
+                                <div><LineChart data={this.props.data}/></div>
                                 <div id="line-user"></div>
                             </Tab>
                             <Tab label="Pie" >
-                                <div><PieChart data={this.props.docs}/></div>
+                                <div><PieChart data={this.props.data}/></div>
                                 <div id="line-user"></div>
                             </Tab>
                         </Tabs>
@@ -81,7 +81,7 @@ class EditorView extends React.Component{
 }
 const mapStateToProps = (state) => {
     return {
-        docs: state.docs,
+        data: state.docs,
     }
 }
 

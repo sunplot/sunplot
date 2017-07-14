@@ -1,2 +1,2 @@
-# sunplot
-Solr query editor and plotting application
+# Sunplot
+Solr query editor and plotting application.

@@ -23,16 +23,16 @@ export default class EditorTable extends React.Component{
         var count = data['result-set'].docs.length
         return rows.map(this.buildRow.bind(this))
     }
-    buildRow(row){
+    buildRow(row,index){
         var fields = Object.values(row);
-        return <TableRow>{fields.map(this.buildRowColumn)}</TableRow>
+        return <TableRow key={"trow-" + index}>{fields.map(this.buildRowColumn)}</TableRow>
     }
-    buildRowColumn(rowColData){
-        return <TableRowColumn>{rowColData}</TableRowColumn>
+    buildRowColumn(rowColData, index){
+        return <TableRowColumn key={"rowcol-" + index}>{rowColData}</TableRowColumn>
     }
 
     buildColumnHeader(data){
-        return <TableHeaderColumn>{data}</TableHeaderColumn>;
+        return <TableHeaderColumn key="tablehc">{data}</TableHeaderColumn>
     }
     buildColumnHeaders(res){
         if(res['result-set'] === undefined ||res['result-set'].docs.length <1){return}

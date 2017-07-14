@@ -40,7 +40,7 @@ class App extends React.Component{
                 <div>
                     <div className={classnames('app-bar', {'expanded': this.state.menuOpen})}>
                         <AppBar
-                            title="Flare"
+                            title="Sunplot"
                             onLeftIconButtonTouchTap={this.handleTouchTap}
                             // style={{backgroundColor:blueGrey900}}
                             iconClassNameRight="muidocs-icon-navigation-expand-more">

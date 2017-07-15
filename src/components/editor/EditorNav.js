@@ -22,10 +22,7 @@ class EditorNav extends React.Component {
         return <StreamExecuteButton query={props.query}/>
     }
     render(){
-        const btnStyle = {
-            margin: 12,
-            textAlign: 'right'
-        }
+
         return (
             <div>
                 <Toolbar>
@@ -34,8 +31,12 @@ class EditorNav extends React.Component {
                     <ToolbarGroup>
 
                         <a href={this.props.url}>
-                            <IconButton tooltip="SVG Icon" tooltip={this.props.url}>
-                            <ActionHome style={{ marginRight: 24}} />
+                            <IconButton tooltip="SVG Icon"
+                                tooltip={this.props.url}
+                                tooltipPosition="top-left"
+                                iconStyle={{width: 48,height: 48}}
+                                style={{ width: 96, height: 96,padding: 24}}>
+                                <ActionHome style={{ marginRight: 24}} />
                             </IconButton>
                             </a>
                         <ToolbarSeparator />

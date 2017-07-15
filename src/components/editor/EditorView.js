@@ -11,7 +11,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import {connect} from 'react-redux'
 import {vim} from 'codemirror/keymap/vim'
 import PieChart from '../charts/PieChart'
-import LineChart from '../charts/LineChart'
+import Histogram from '../charts/Histogram'
 /**
  * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
  */
@@ -65,12 +65,10 @@ class EditorView extends React.Component{
                     <Tab label="Charts" >
                         <Tabs>
                             <Tab label="Line" >
-                                <div><LineChart data={this.props.data}/></div>
-                                <div id="line-user"></div>
+                                <div id="histogram"><Histogram data={this.props.data} width={900} height={500}/></div>
                             </Tab>
                             <Tab label="Pie" >
-                                <div><PieChart data={this.props.data}/></div>
-                                <div id="line-user"></div>
+                                <div id="pieChart"><PieChart data={this.props.data}/></div>
                             </Tab>
                         </Tabs>
                     </Tab>

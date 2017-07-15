@@ -9,7 +9,6 @@ export default class PieChart extends React.Component {
         this.state = {
             width: 800,
             height: 600,
-            chartId: 'v1_chart'
         }
     }
 

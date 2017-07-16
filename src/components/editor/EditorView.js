@@ -11,7 +11,8 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import {connect} from 'react-redux'
 import {vim} from 'codemirror/keymap/vim'
 import PieChart from '../charts/PieChart'
-import Histogram from '../charts/Histogram'
+import LineChart from '../charts/LineChart';
+import BarChart from '../charts/BarChart';
 /**
  * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
  */
@@ -19,7 +20,7 @@ class EditorView extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            query: "select director_name,sum(gross) from films group by director_name order by sum(gross) desc limit 10",
+            query: "select title_year,count(*) from films group by title_year order by title_year desc limit 20",
             docs : []
         };
     }
@@ -41,8 +42,14 @@ class EditorView extends React.Component{
             // mode:"commonlisp"
             mode: checkMode(this.props.mode),
             vimMode : true
-        };
-        const my = [{hi:"hi",count:1}]
+        }
+        const simpleLineChartData = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            series: [
+
+                [1, 3, 4, 5, 6]
+              ]
+          }
         return(
             <div id="EditorView">
                 <div>
@@ -63,14 +70,9 @@ class EditorView extends React.Component{
                         <div><pre>{JSON.stringify(this.props.data.docs, null, 2) }</pre></div>;
                     </Tab>
                     <Tab label="Charts" >
-                        <Tabs>
-                            <Tab label="Line" >
-                                <div id="histogram"><Histogram data={this.props.data} width={900} height={500}/></div>
-                            </Tab>
-                            <Tab label="Pie" >
-                                <div id="pieChart"><PieChart data={this.props.data}/></div>
-                            </Tab>
-                        </Tabs>
+                        <LineChart data={this.props.data}/>
+
+                        <BarChart data={this.props.data}/>
                     </Tab>
                 </Tabs>
             </div>

@@ -50,3 +50,17 @@ body{
   fill: #fff;
   font: 10px sans-serif;
 }
+.ct-series-a .ct-line {
+  /* Set the colour of this series line */
+  stroke: #00BCD4;
+  /* Control the thikness of your lines */
+  stroke-width: 5px;
+
+}
+.ct-series-a .ct-bar {
+  /* Colour of your bars */
+  stroke:  #00BCD4;
+  /* The width of your bars */
+  stroke-width: 20px;
+  
+}

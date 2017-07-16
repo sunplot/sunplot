@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "chartist": "^0.11.0",
     "classnames": "^2.2.5",
     "codemirror": "^5.27.4",
     "d3": "^4.9.1",

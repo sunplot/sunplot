@@ -72,6 +72,7 @@ class EditorView extends React.Component{
                     <Tab label="Charts" >
                         <Chart type="Bar" data={this.props.data}/>
                         <Chart type="Line" data={this.props.data}/>
+                        <PieChart type="Pie" data={this.props.data}/>
                     </Tab>
                 </Tabs>
             </div>

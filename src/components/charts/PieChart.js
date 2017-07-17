@@ -1,44 +1,54 @@
 import React from 'react'
-import d3 from "d3";
-import {scaleOrdinal} from "d3-scale"
-import {arc, pie} from "d3-shape"
+import Chartist from 'chartist'
 
-export default class PieChart extends React.Component {
+export default class Pie extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
-            width: 800,
-            height: 600,
+    }
+    componentDidMount() {
+        this.updateChart(this.props);
+    }
+    componentWillReceiveProps(nextProps) {
+        this.updateChart(nextProps);
+    }
+    updateChart(props) {
+        if(props.data!== undefined && props.data['result-set']!== undefined){
+            const docs = props.data['result-set'].docs
+            const data = {
+                labels: [],
+                series: []
+            }
+            docs.map(doc=>(
+                data.labels.push(Object.values(doc)[0]),
+                data.series.push(Object.values(doc)[1])
+            ))
+            const options = {
+              labelInterpolationFnc: function(value) {
+                return value[0]
+              }
+            };
+
+            const responsiveOptions = [
+              ['screen and (min-width: 640px)', {
+                chartPadding: 30,
+                labelOffset: 100,
+                labelDirection: 'explode',
+                labelInterpolationFnc: function(value) {
+                  return value;
+                }
+              }],
+              ['screen and (min-width: 1024px)', {
+                labelOffset: 80,
+                chartPadding: 20
+              }]
+            ];
+            return new Chartist.Pie('#PieChart', data, options, responsiveOptions)
         }
     }
 
-    render(){
-        let data = []
-        if(this.props.data!== undefined && this.props.data['result-set']!== undefined){
-            data = this.props.data['result-set'].docs
-        }
-
-       const height = 500
-       const width = 960
-       const radius = Math.min(width, height) / 2
-       const color = scaleOrdinal(["#00BCD4","#FFD54F","#00838F","#8BC34A", "#CDDC39", "#40C4FF", "#9FA8DA", "#18FFFF", "#66BB6A", "#FFF176"]);
-       const pieChart = pie().sort(null).value(function(d) { return Object.values(d)[1] })
-       const path = arc().outerRadius(radius - 10).innerRadius(0)
-       const label = arc().outerRadius(radius - 40).innerRadius(radius - 40);
-       return (
-           <svg width={width} height={height}>
-               <g transform={`translate(${width/2},${height/2})`}>
-               {pieChart(data).map((d,i) =>(
-                   <g key={i} className="arc" >
-                        <path d={path(d)} fill={
-                            color(i)
-                        } />
-                        <text transform={`translate(${label.centroid(d)})`} dy="0.35em">{Object.values(d.data)[0]}</text>
-                   </g>
-               ))}
-               </g>
-           </svg>
-       )
-   }
-
+    render() {
+        return (
+            <div id="PieChart" className="chart" ></div>
+        )
+    }
 }

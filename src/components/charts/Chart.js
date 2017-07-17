@@ -23,13 +23,13 @@ export default class BarChart extends React.Component{
                 data.series[0].push(Object.values(doc)[1])
             ))
 
-            return new Chartist.Bar('#BarChart', data);
+            return new Chartist[props.type]('#' + props.type + 'Chart', data);
         }
     }
 
     render() {
         return (
-            <div id="BarChart" className="chart" ></div>
+            <div id={this.props.type + 'Chart'} className="chart" ></div>
         )
     }
 }

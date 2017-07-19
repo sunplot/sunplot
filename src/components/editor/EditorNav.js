@@ -51,9 +51,6 @@ class EditorNav extends React.Component {
             :<div></div>)
     }
 
-
-
-
     render(){
         return (
 

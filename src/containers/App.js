@@ -5,13 +5,16 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import {blueGrey900, blueGrey500, grey900,grey200} from 'material-ui/styles/colors'
 import AppBar from 'material-ui/AppBar'
 import Sidebar from '../components/Sidebar'
-import FlareSubNav from '../components/FlareSubNav'
-import Editor from '../components/editor/EditorView'
+import Editor from '../components/editor/Editor'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import classnames from 'classnames'
 import {Footer} from '../components/Footer'
 import { connect } from 'react-redux'
-import RaisedButton from 'material-ui/RaisedButton'
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
+import Logo from 'material-ui/svg-icons/image/wb-sunny'
+import SettingsIcon from 'material-ui/svg-icons/action/settings'
+
 const myTheme = getMuiTheme({
     palette: {
         textColor: blueGrey500  ,
@@ -24,14 +27,9 @@ class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            menuOpen : false,
             editorMode : props.location.pathname.slice(1)
         }
-        //Bind the function.
-        this.handleTouchTap = this.handleTouchTap.bind(this);
-    }
-    handleTouchTap(){
-        this.setState({ menuOpen: !this.state.menuOpen});
+
     }
 
     render(){
@@ -39,18 +37,13 @@ class App extends React.Component{
             <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
                 <div>
                     <div className={classnames('app-bar', {'expanded': this.state.menuOpen})}>
-                        <AppBar
-                            title="Sunplot"
-                            onLeftIconButtonTouchTap={this.handleTouchTap}
-                            // style={{backgroundColor:blueGrey900}}
-                            iconClassNameRight="muidocs-icon-navigation-expand-more">
-
+                        <AppBar title="Sunplot"
+                            iconElementLeft={<IconButton><Logo /></IconButton>}
+                            iconElementRight={<IconButton><SettingsIcon /></IconButton>}>
                         </AppBar>
                     </div>
                     <Editor mode={this.state.editorMode}/>
-                    <div>
-                        <Sidebar handleTouchTap={this.handleTouchTap.bind(this)} menuOpen={this.state.menuOpen} solrs={this.props.solrs}></Sidebar>
-                    </div>
+
                 </div>
             </MuiThemeProvider>
         );

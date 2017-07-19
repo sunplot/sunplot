@@ -28,28 +28,7 @@ body{
   padding-left: 255px;
 }
 /* Charting */
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 2px;
-}
-.arc text {
-  font: 10px sans-serif;
-  text-anchor: middle;
-}
 
-.arc path {
-  stroke: #fff;
-}
-
-.bar rect {
-  fill: steelblue;
-}
-
-.bar text {
-  fill: #fff;
-  font: 10px sans-serif;
-}
 .ct-series-a .ct-line {
   /* Set the colour of this series line */
   stroke: #00BCD4;
@@ -62,5 +41,5 @@ body{
   stroke:  #00BCD4;
   /* The width of your bars */
   stroke-width: 20px;
-  
+
 }

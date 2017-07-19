@@ -1,7 +1,6 @@
 import React from 'react'
 import EditorNav from './EditorNav'
 import Paper from 'material-ui/Paper'
-import FlareSubNav from '../FlareSubNav'
 import CodeMirror from 'react-codemirror'
 import {sql} from 'codemirror/mode/sql/sql'
 import {js} from 'codemirror/mode/javascript/javascript'
@@ -13,7 +12,7 @@ import {vim} from 'codemirror/keymap/vim'
 /**
  * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
  */
-class EditorView extends React.Component{
+class Editor extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -71,4 +70,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(EditorView)
+export default connect(mapStateToProps)(Editor)

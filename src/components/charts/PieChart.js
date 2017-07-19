@@ -25,8 +25,9 @@ export default class Pie extends React.Component{
             const options = {
               labelInterpolationFnc: function(value) {
                 return value[0]
-              }
-            };
+              },
+              height:400,
+            }
 
             const responsiveOptions = [
               ['screen and (min-width: 640px)', {

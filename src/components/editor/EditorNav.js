@@ -9,7 +9,14 @@ import {sqlCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
 import SQLExecuteButton from './SQLExecuteButton'
 import StreamExecuteButton from './StreamExecuteButton'
-import ActionHome from 'material-ui/svg-icons/content/link';
+import ActionHome from 'material-ui/svg-icons/content/content-paste'
+import ExportData from 'material-ui/svg-icons/file/file-download'
+import {CSVDownload, CSVLink} from 'react-csv'
+import {Tabs, Tab} from 'material-ui/Tabs'
+import PieChart from '../charts/PieChart'
+import Chart from '../charts/Chart'
+import Divider from 'material-ui/Divider'
+import EditorTable from './EditorTable'
 
 class EditorNav extends React.Component {
     constructor(props) {
@@ -21,30 +28,73 @@ class EditorNav extends React.Component {
         }
         return <StreamExecuteButton query={props.query}/>
     }
-    render(){
+    displayTime(){
+        return(
+            (this.props.time !== undefined)?
+                    <div>
+                        <h4 style={{paddingLeft:"10",
+                                color:"rgb(96, 125, 139)",
+                                fontFamily: "Roboto, sans-serif"}}>{"Response time: " + this.props.time}</h4>
+                    </div>:<div></div>
+        )
+    }
+    downloadCSV(){
+        return(this.props.data.docs !== undefined && this.props.data.docs.length > 1 ?
+            <CSVLink data={this.props.data.docs} >
+                <IconButton tooltip="Export as CSV"
+                    tooltipPosition="top-left"
+                    iconStyle={{width: 48,height: 48}}
+                    style={{ width: 96, height: 96,padding: 24}}>
+                    <ExportData style={{ marginRight: 24}} />
+                </IconButton>
+            </CSVLink>
+            :<div></div>)
+    }
 
+
+
+
+    render(){
         return (
+
             <div>
                 <Toolbar>
                     <ToolbarGroup firstChild={true}>
+                        {this.displayTime()}
                     </ToolbarGroup>
-                    <ToolbarGroup>
 
-                        <a href={this.props.url}>
-                            <IconButton tooltip="SVG Icon"
+                    <ToolbarGroup>
+                            {this.downloadCSV()}
+
+                            <IconButton
                                 tooltip={this.props.url}
                                 tooltipPosition="top-left"
                                 iconStyle={{width: 48,height: 48}}
                                 style={{ width: 96, height: 96,padding: 24}}>
                                 <ActionHome style={{ marginRight: 24}} />
                             </IconButton>
-                            </a>
+
                         <ToolbarSeparator />
                         {this.getButton(this.props)}
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>
                     </ToolbarGroup>
                 </Toolbar>
-
+                <Tabs>
+                    <Tab label="Table" >
+                        <div>
+                            <EditorTable data={this.props.data} />
+                        </div>
+                    </Tab>
+                    <Tab label="JSON" >
+                        <div><pre>{JSON.stringify(this.props.data.docs, null, 2) }</pre></div>;
+                    </Tab>
+                    <Tab label="Charts" >
+                        <Chart type="Bar" data={this.props.data}/>
+                        <Divider />
+                        <Chart type="Line" data={this.props.data}/>
+                        <PieChart type="Pie" data={this.props.data}/>
+                    </Tab>
+                </Tabs>
             </div>
     )
     }

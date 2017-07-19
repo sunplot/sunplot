@@ -1,7 +1,7 @@
 import React from 'react'
 import Chartist from 'chartist'
 
-export default class BarChart extends React.Component{
+export default class Chart extends React.Component{
     constructor(props){
         super(props)
     }
@@ -23,7 +23,13 @@ export default class BarChart extends React.Component{
                 data.series[0].push(Object.values(doc)[1])
             ))
 
-            return new Chartist[props.type]('#' + props.type + 'Chart', data);
+            const options =  {
+                fullWidth: true,
+                height:400,
+                chartPadding: {
+                    right: 40
+                }}
+            return new Chartist[props.type]('#' + props.type + 'Chart', data, options);
         }
     }
 

@@ -7,7 +7,8 @@ export function sqlCommand(query){
             let data = response.data
             if(data['result-set']!== undefined){
                 data.docs = data['result-set'].docs
-                data.docs.pop()
+                const info = data.docs.pop()
+                data.responsetime = info['RESPONSE_TIME']
             }
             data.url = url
             dispatch({type: "EXECUTE_QUERY", payload : data})
@@ -23,7 +24,13 @@ export function streamingCommand(query){
             let data = response.data
             if(data['result-set']!== undefined){
                 data.docs = data['result-set'].docs
-                data.docs.pop()
+                const info = data.docs.pop()
+                if(data.docs.length < 2){
+                    data = info
+                }else{
+                    data.responseTime = info['RESPONSE_TIME']
+                }
+
             }
             response.data.url = url
             dispatch({type: "EXECUTE_QUERY", payload : data})

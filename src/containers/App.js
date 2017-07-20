@@ -13,7 +13,8 @@ import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import Logo from 'material-ui/svg-icons/image/wb-sunny'
-import SettingsIcon from 'material-ui/svg-icons/action/settings'
+import SettingsDialog from '../components/dialogs/SettingDialog'
+
 
 const myTheme = getMuiTheme({
     palette: {
@@ -39,7 +40,7 @@ class App extends React.Component{
                     <div className={classnames('app-bar', {'expanded': this.state.menuOpen})}>
                         <AppBar title="Sunplot"
                             iconElementLeft={<IconButton><Logo /></IconButton>}
-                            iconElementRight={<IconButton><SettingsIcon /></IconButton>}>
+                            iconElementRight={<SettingsDialog />}>
                         </AppBar>
                     </div>
                     <Editor mode={this.state.editorMode}/>

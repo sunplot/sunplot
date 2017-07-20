@@ -9,6 +9,7 @@ import FontIcon from 'material-ui/FontIcon';
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import AddToQueue from 'material-ui/svg-icons/content/add'
 import {connect} from 'react-redux';
+import SettingsForm from '../components/form/SettingsForm'
 
 const addIcon = <AddToQueue />;
 const nearbyIcon = <IconLocationOn />;
@@ -16,14 +17,20 @@ const nearbyIcon = <IconLocationOn />;
 class SolrList extends React.Component{
     renderSolrList(){
         return this.props.solrs.map((solr)=>{
-            return <li>{solr.name} {solr.url}</li>
+            return <li key={solr.id}>{solr.name} {solr.url}</li>
         })
     }
     render(){
+
         return(
-            <ul>
-                {this.renderSolrList()}
-            </ul>
+            <MuiThemeProvider>
+                <div>
+                    <SettingsForm />
+                    <ul>
+                        {this.renderSolrList()}
+                    </ul>
+                </div>
+        </ MuiThemeProvider>
         )
     }
 }

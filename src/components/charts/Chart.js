@@ -28,7 +28,8 @@ export default class Chart extends React.Component{
                 height:400,
                 chartPadding: {
                     right: 40
-                }}
+                }
+            }
             return new Chartist[props.type]('#' + props.type + 'Chart', data, options);
         }
     }

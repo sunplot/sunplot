@@ -8,19 +8,23 @@ import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress';
 import classnames from 'classnames'
-import {saveSettings} from '../../actions/SettingsAction'
+import {saveSettings, getSetting} from '../../actions/SettingsAction'
 
 class SettingsForm extends React.Component {
 
     constructor(props){
         super(props)
         this.state = {
-            host:'',
-            port:'',
-            collection:'',
+            host: this.props.setting ? this.props.setting.host:'',
+            port: this.props.setting ? this.props.setting.port:'',
+            collection:this.props.setting ? this.props.setting.collection:'',
             errors:{},
             loading:false
         }
+    }
+    componentDidMount(){
+        this.props.getSetting();
+        this.setState(this.props.setting)
     }
 
     handleChange = (e) => {
@@ -52,26 +56,20 @@ class SettingsForm extends React.Component {
             this.setState({loading:true})
             const {host, port, collection} = this.state
             this.props.saveSettings({host, port, collection}).then(
-                ()=>{this.props.handler},
+                ()=>{this.props.handler()},
                 (err)=> err.response.json().then(({errors})=>{
                     this.setState({errors})
-                    console.log(this.state)
                 })
             )
 
-            //close the dialog
-            //this.props.handler()
         }
     }
-
 
     render(){
         return(
             <div>
-
-
+            <p>{this.state.host}</p>
                 <form
-
                     className={classnames('ui', 'form', {loading: this.state.loading})}>
                     {
                         !!this.state.errors.global &&
@@ -119,4 +117,11 @@ class SettingsForm extends React.Component {
         )
     }
 }
-export default connect(null,{saveSettings})(SettingsForm);
+
+const mapStateToProps = (state) => {
+    return {
+        setting: state.setting,
+    }
+}
+
+export default connect(mapStateToProps,{saveSettings, getSetting})(SettingsForm);

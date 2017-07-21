@@ -1,14 +1,22 @@
 export function getSetting(){
-    return {type:"GET_APP_SETTING",
-            payload:{
-                host:"http://localhost",
-                port:9191,
-                collection:"films"}
+    return dispatch=> {
+        return fetch('/api/settings')
+                .then(res => res.json())
+                .then(data => dispatch(setSetting(data)))
     }
+
 }
 
+export const GET_SETTING = 'GET_SETTING'
+export function setSetting(setting){
+    return {
+        type: GET_SETTING,
+        setting
+    }
+
+}
 export function saveSettings(data){
-    return dispatch =>{
+    return dispatch => {
         return fetch('/api/settings',{
             method: 'POST',
             body: JSON.stringify(data),

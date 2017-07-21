@@ -9,7 +9,9 @@
   },
   "author": "Michael Suzuki",
   "dependencies": {
-    "express": "^4.15.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "fs": "0.0.1-security"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

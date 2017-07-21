@@ -6,8 +6,9 @@ import Checkbox from 'material-ui/Checkbox'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
+import CircularProgress from 'material-ui/CircularProgress';
 import classnames from 'classnames'
-
+import {saveSettings} from '../../actions/SettingsAction'
 
 class SettingsForm extends React.Component {
 
@@ -17,7 +18,8 @@ class SettingsForm extends React.Component {
             host:'',
             port:'',
             collection:'',
-            errors:{}
+            errors:{},
+            loading:false
         }
     }
 
@@ -47,9 +49,18 @@ class SettingsForm extends React.Component {
 
         const isValid = Object.keys(errors).length === 0
         if(isValid){
-            console.log('We have a valid form')
+            this.setState({loading:true})
+            const {host, port, collection} = this.state
+            this.props.saveSettings({host, port, collection}).then(
+                ()=>{this.props.handler},
+                (err)=> err.response.json().then(({errors})=>{
+                    this.setState({errors})
+                    console.log(this.state)
+                })
+            )
+
             //close the dialog
-            this.props.handler()
+            //this.props.handler()
         }
     }
 
@@ -57,43 +68,55 @@ class SettingsForm extends React.Component {
     render(){
         return(
             <div>
-            <form >
-                <TextField name="host"
-                           hintText="http://localhost"
-                           floatingLabelText="Host"
-                           value={this.state.host}
-                           onChange={this.handleChange}
-                           errorText={this.state.errors.host}/>
-                <br />
-                <TextField name="port"
-                           hintText="Port number"
-                           floatingLabelText="Port"
-                           value={this.state.port}
-                           onChange={this.handleChange}
-                           errorText={this.state.errors.port}/>
-                <br />
-                <TextField name="collection"
-                           hintText="Collection name"
-                           floatingLabelText="Collection"
-                           value={this.state.collection}
-                           onChange={this.handleChange}
-                           errorText={this.state.errors.collection}/>
-                <br />
-                <br />
-                <FlatButton
-                  label="Save"
-                  primary={true}
-                  onTouchTap={this.handleSubmit.bind(this)}
-                />
-                <FlatButton
-                  label="Cancel"
-                  primary={true}
-                  disabled={false}
-                  onTouchTap={this.props.handler}
-                />
-            </form>
+
+
+                <form
+
+                    className={classnames('ui', 'form', {loading: this.state.loading})}>
+                    {
+                        !!this.state.errors.global &&
+                        <div id="backend-error">
+                            <TextField disabled={true} errorText={this.state.errors.global} />
+                            <br />
+                        </div>
+
+                    }
+                    <TextField name="host"
+                               hintText="http://localhost"
+                               floatingLabelText="Host"
+                               value={this.state.host}
+                               onChange={this.handleChange}
+                               errorText={this.state.errors.host}/>
+                    <br />
+                    <TextField name="port"
+                               hintText="Port number"
+                               floatingLabelText="Port"
+                               value={this.state.port}
+                               onChange={this.handleChange}
+                               errorText={this.state.errors.port}/>
+                    <br />
+                    <TextField name="collection"
+                               hintText="Collection name"
+                               floatingLabelText="Collection"
+                               value={this.state.collection}
+                               onChange={this.handleChange}
+                               errorText={this.state.errors.collection}/>
+                    <br />
+                    <br />
+                    <FlatButton
+                      label="Save"
+                      primary={true}
+                      onTouchTap={this.handleSubmit.bind(this)}
+                    />
+                    <FlatButton
+                      label="Cancel"
+                      primary={true}
+                      disabled={false}
+                      onTouchTap={this.props.handler}
+                    />
+                </form>
             </div>
         )
     }
 }
-export default SettingsForm;
+export default connect(null,{saveSettings})(SettingsForm);

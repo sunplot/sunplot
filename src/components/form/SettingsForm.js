@@ -11,12 +11,16 @@ import classnames from 'classnames'
 
 class SettingsForm extends React.Component {
 
-    state = {
-        host:'',
-        port:'',
-        collection:'',
-        errors:{}
+    constructor(props){
+        super(props)
+        this.state = {
+            host:'',
+            port:'',
+            collection:'',
+            errors:{}
+        }
     }
+
     handleChange = (e) => {
         if(!!this.state.errors[e.target.name]){
             let errors = Object.assign({},this.state.errors)
@@ -30,6 +34,7 @@ class SettingsForm extends React.Component {
             this.setState({[e.target.name]:e.target.value})
         }
     }
+
     handleSubmit = (e) => {
         e.preventDefault()
         //validate here
@@ -39,6 +44,13 @@ class SettingsForm extends React.Component {
         if(this.state.port === '' || this.state.port < 2) errors.port = "Port number is required"
         if(this.state.collection === '' ) errors.collection = "Collection is required"
         this.setState({errors})
+
+        const isValid = Object.keys(errors).length === 0
+        if(isValid){
+            console.log('We have a valid form')
+            //close the dialog
+            this.props.handler()
+        }
     }
 
 

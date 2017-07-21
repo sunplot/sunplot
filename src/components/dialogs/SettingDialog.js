@@ -8,73 +8,32 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import Divider from 'material-ui/Divider'
 import SettingsForm from '../form/SettingsForm'
-/**
- * A modal dialog can only be closed by selecting one of the actions.
- */
+
 export default class SettingDialog extends React.Component {
-  state = {
-    open: false,
-    url:'http://localhost',
-    port:'9191',
-    collection:'films'
-  };
+    state = {
+        open: false,
+    }
 
-  handleOpen = () => {
-    this.setState({open: true});
-  };
+    handler = () => {
+        if(this.state.open === true){
+            this.setState({open: false});
+        } else {
+            this.setState({open: true});
+        }
+    }
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
 
-  render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        disabled={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
-    const styles = {
-              block: {
-                maxWidth: 250,
-              },
-              toggle: {
-                marginBottom: 16,
-              },
-              thumbOff: {
-                backgroundColor: '#ffcccc',
-              },
-              trackOff: {
-                backgroundColor: '#ff9d9d',
-              },
-              thumbSwitched: {
-                backgroundColor: 'red',
-              },
-              trackSwitched: {
-                backgroundColor: '#ff9d9d',
-              },
-              labelStyle: {
-                color: 'red',
-              },
-          }
-    return (
-            <IconButton label="Modal Dialog" onTouchTap={this.handleOpen} style={{color:"white"}}>
+    render() {
+        return (
+            <IconButton label="Modal Dialog" onTouchTap={this.handler} style={{color:"white"}}>
                 <SettingsIcon  />
                 <Dialog id="settings-form"
                         title="Settings"
-                        actions={actions}
                         modal={true}
                         open={this.state.open}>
-                        <SettingsForm />
+                        <SettingsForm handler={this.handler.bind(this)}/>
                 </Dialog>
             </ IconButton>
-    );
-  }
+        )
+    }
 }

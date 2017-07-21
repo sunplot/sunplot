@@ -76,9 +76,9 @@ class SettingsForm extends React.Component {
                 <FlatButton
                   label="Cancel"
                   primary={true}
-                  disabled={true}
-                  onTouchTap={this.props.handleClose}
-                />,
+                  disabled={false}
+                  onTouchTap={this.props.handler}
+                />
             </form>
             </div>
         )

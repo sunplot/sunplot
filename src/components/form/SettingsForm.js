@@ -5,17 +5,17 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import Checkbox from 'material-ui/Checkbox'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
 import classnames from 'classnames'
+
 
 class SettingsForm extends React.Component {
 
     state = {
         host:'',
-        port:'9191',
+        port:'',
         collection:'',
         errors:{}
-
-
     }
     handleChange = (e) => {
         if(!!this.state.errors[e.target.name]){
@@ -35,8 +35,8 @@ class SettingsForm extends React.Component {
         //validate here
         let errors = {}
 
-        if(this.state.host === '' ) errors.host = "Host is required"
-        if(this.state.port === '' ) errors.port = "Port number is required"
+        if(this.state.host === '' || !this.state.host.startsWith('http')) errors.host = "Host is required"
+        if(this.state.port === '' || this.state.port < 2) errors.port = "Port number is required"
         if(this.state.collection === '' ) errors.collection = "Collection is required"
         this.setState({errors})
     }
@@ -45,31 +45,40 @@ class SettingsForm extends React.Component {
     render(){
         return(
             <div>
-            <h1> Settings </h1>
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form >
                 <TextField name="host"
-                           hintText="URL"
+                           hintText="http://localhost"
                            floatingLabelText="Host"
                            value={this.state.host}
-                           onChange={this.handleChange}/>
-                <span>{this.state.errors.host}</span>
+                           onChange={this.handleChange}
+                           errorText={this.state.errors.host}/>
                 <br />
                 <TextField name="port"
                            hintText="Port number"
                            floatingLabelText="Port"
                            value={this.state.port}
-                           onChange={this.handleChange}/>
-                <span>{this.state.errors.port}</span>
+                           onChange={this.handleChange}
+                           errorText={this.state.errors.port}/>
                 <br />
                 <TextField name="collection"
                            hintText="Collection name"
                            floatingLabelText="Collection"
                            value={this.state.collection}
-                           onChange={this.handleChange}/>
-                <span>{this.state.errors.collection}</span>
+                           onChange={this.handleChange}
+                           errorText={this.state.errors.collection}/>
                 <br />
                 <br />
-                <button className="ui primary button"> Save</button>
+                <FlatButton
+                  label="Save"
+                  primary={true}
+                  onTouchTap={this.handleSubmit.bind(this)}
+                />
+                <FlatButton
+                  label="Cancel"
+                  primary={true}
+                  disabled={true}
+                  onTouchTap={this.props.handleClose}
+                />,
             </form>
             </div>
         )

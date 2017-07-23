@@ -1,11 +1,18 @@
 import axios from 'axios'
 
-export function sqlCommand(query){
+function buildQuery(query,setting, isStreaming){
+    const host = setting.host
+    const port = setting.port
+    const collection = setting.collection
+    const stmt = isStreaming? "/stream?expr=": "/sql?stmt="
+    return host + ":" + port + "/solr/" + collection + stmt + query
+}
+export function sqlCommand(query,setting){
     return function(dispatch){
-        const url = "http://localhost:9191/solr/films/sql?stmt="+query
-        fetch(url).then((response)=>{
+        const url = buildQuery(query,setting,false)
+        axios.get(url).then((response)=>{
             let data = response.data
-            if(data['result-set']!== undefined){
+            if(data['result-set']){
                 data.docs = data['result-set'].docs
                 const info = data.docs.pop()
                 data.responsetime = info['RESPONSE_TIME']
@@ -17,10 +24,10 @@ export function sqlCommand(query){
         });
     }
 }
-export function streamingCommand(query){
+export function streamingCommand(query,setting){
     return function(dispatch){
-        const url = "http://localhost:9191/solr/films/stream?expr="+query
-        fetch(url).then((response)=>{
+        const url = buildQuery(query, setting, true)
+        axios.get(url).then((response)=>{
             let data = response.data
             if(data['result-set']){
                 data.docs = data['result-set'].docs
@@ -30,7 +37,6 @@ export function streamingCommand(query){
                 }else{
                     data.responseTime = info['RESPONSE_TIME']
                 }
-
             }
             response.data.url = url
             dispatch({type: "EXECUTE_QUERY", payload : data})

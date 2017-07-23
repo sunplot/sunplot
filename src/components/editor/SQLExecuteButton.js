@@ -19,11 +19,17 @@ class SQLExecuteButton extends React.Component {
                               label="Execute"
                               primary={true}
                               style={btnStyle}
-                              onTouchTap={()=> this.props.sqlCommand(this.props.query)} />
+                              onTouchTap={()=> this.props.sqlCommand(this.props.query,this.props.setting)} />
     )
     }
 }
 function matchDispatchToProps(dispatch){
     return bindActionCreators({sqlCommand:sqlCommand}, dispatch)
 }
-export default connect(null,matchDispatchToProps)(SQLExecuteButton)
+const mapStateToProps = (state) => {
+    return {
+        setting: state.setting,
+        sqlCommand:sqlCommand
+    }
+}
+export default connect(mapStateToProps,matchDispatchToProps)(SQLExecuteButton)

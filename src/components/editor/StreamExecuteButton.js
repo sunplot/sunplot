@@ -19,11 +19,17 @@ class StreamExecuteButton extends React.Component {
                               label="Execute"
                               primary={true}
                               style={btnStyle}
-                              onTouchTap={()=> this.props.streamingCommand(this.props.query)} />
+                              onTouchTap={()=> this.props.streamingCommand(this.props.query, this.props.setting)} />
     )
     }
 }
 function matchDispatchToProps(dispatch){
     return bindActionCreators({streamingCommand:streamingCommand}, dispatch)
 }
-export default connect(null,matchDispatchToProps)(StreamExecuteButton)
+const mapStateToProps = (state) => {
+    return {
+        setting: state.setting,
+        streamingCommand:streamingCommand
+    }
+}
+export default connect(mapStateToProps, matchDispatchToProps)(StreamExecuteButton)

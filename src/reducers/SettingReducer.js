@@ -2,8 +2,8 @@ import {FETCH_SETTING,RECEIVE_SETTING,FETCH_SETTING_ERROR,SAVE_SETTING} from '..
 
 const initalState = {
     host:"http://localhost",
-    port:8983,
-    collection:"",
+    port:9191,
+    collection:"films",
     fetching:false,
     fetched:false,
     error:null

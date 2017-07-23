@@ -23,7 +23,7 @@ class SettingsForm extends React.Component {
         }
     }
     componentDidMount(){
-        this.props.getSetting();
+        this.props.getSetting(this.props.setting);
         this.setState(this.props.setting)
     }
 
@@ -55,20 +55,21 @@ class SettingsForm extends React.Component {
         if(isValid){
             this.setState({loading:true})
             const {host, port, collection} = this.state
-            this.props.saveSettings({host, port, collection}).then(
-                ()=>{this.props.handler()},
-                (err)=> err.response.json().then(({errors})=>{
-                    this.setState({errors})
-                })
-            )
-
+            this.props.saveSettings({host, port, collection})
+            .then((res)=>{
+                if(res.ok){
+                    this.props.handler()
+                } else {
+                    this.setState({errors:{global:res.errors.message}})
+                }
+            })
         }
     }
 
     render(){
         return(
             <div>
-            <p>{this.state.host}</p>
+
                 <form
                     className={classnames('ui', 'form', {loading: this.state.loading})}>
                     {

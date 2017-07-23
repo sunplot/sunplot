@@ -56,13 +56,15 @@ class SettingsForm extends React.Component {
             this.setState({loading:true})
             const {host, port, collection} = this.state
             this.props.saveSettings({host, port, collection})
-            .then((res)=>{
-                if(res.ok){
-                    this.props.handler()
-                } else {
-                    this.setState({errors:{global:res.errors.message}})
+            .then(
+                (res)=> {
+                    if(res.error){
+                        this.setState({errors:{global:res.error.message}})
+                    } else {
+                        this.props.handler()
+                    }
                 }
-            })
+            )
         }
     }
 

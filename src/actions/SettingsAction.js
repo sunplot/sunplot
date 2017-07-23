@@ -1,3 +1,4 @@
+import axios from 'axios'
 export const SAVE_SETTING = 'SAVE_SETTING'
 export const FETCH_SETTING = 'FETCH_SETTING'
 export const RECEIVE_SETTING = 'RECEIVE_SETTING'
@@ -36,25 +37,18 @@ export function receivSetting(){
 export function saveSettings(data){
     return dispatch => {
         dispatch(fetchSetting)
-        return fetch('/api/settings',{
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type":"application/json"
-            }
-        }).then(function (response){
+        return axios.post('/api/settings', data).then((response)=>{
             dispatch(receivSetting)
             if(response.ok){
                 dispatch(setSetting(data))
                 return response
-            } else {
-                let msg = "Unable to save setting, setting api " + response.statusText
-                let error = new Error(msg)
-                dispatch({type:FETCH_SETTING_ERROR, payload:error})
-                return {errors : error}
-                throw error
             }
-        })
+        }).catch(error => {
+
+            dispatch({type:FETCH_SETTING_ERROR, payload:error.message})
+            return {error}
+            throw error
+        });
     }
 }
 function handleResponse(res){

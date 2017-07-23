@@ -3,7 +3,7 @@ import axios from 'axios'
 export function sqlCommand(query){
     return function(dispatch){
         const url = "http://localhost:9191/solr/films/sql?stmt="+query
-        axios.get(url).then((response)=>{
+        fetch(url).then((response)=>{
             let data = response.data
             if(data['result-set']!== undefined){
                 data.docs = data['result-set'].docs
@@ -20,9 +20,9 @@ export function sqlCommand(query){
 export function streamingCommand(query){
     return function(dispatch){
         const url = "http://localhost:9191/solr/films/stream?expr="+query
-        axios.get(url).then((response)=>{
+        fetch(url).then((response)=>{
             let data = response.data
-            if(data['result-set']!== undefined){
+            if(data['result-set']){
                 data.docs = data['result-set'].docs
                 const info = data.docs.pop()
                 if(data.docs.length < 2){

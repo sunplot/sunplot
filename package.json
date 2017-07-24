@@ -14,6 +14,7 @@
     "react": "^15.5.4",
     "react-bash": "^1.5.3",
     "react-codemirror": "^1.0.0",
+    "react-copy-button-wrapper": "0.0.4",
     "react-csv": "^1.0.8",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",

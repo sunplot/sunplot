@@ -16,6 +16,7 @@ import PieChart from '../charts/PieChart'
 import Chart from '../charts/Chart'
 import Divider from 'material-ui/Divider'
 import EditorTable from './EditorTable'
+import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
 
 class EditorNav extends React.Component {
     constructor(props) {
@@ -46,6 +47,7 @@ class EditorNav extends React.Component {
     }
 
     render(){
+
         return (
 
             <div>
@@ -56,15 +58,19 @@ class EditorNav extends React.Component {
 
                     <ToolbarGroup>
                             {this.downloadCSV()}
-
-                            <IconButton
-                                tooltip={this.props.url}
-                                tooltipPosition="top-left"
-                                iconStyle={{width: 48,height: 48}}
-                                style={{ width: 96, height: 96,padding: 24}}>
-                                <ActionHome style={{ marginRight: 24}} />
-                            </IconButton>
-
+                            <ReactCopyButtonWrapper text={encodeURI(this.props.url)}>
+                                <IconButton
+                                    tooltip={this.props.url}
+                                    tooltipPosition="top-left"
+                                    iconStyle={{width: 48,height: 48}}
+                                    style={{ width: 96, height: 96,padding: 24}}
+                                    onTouchTap={this.copyToClipboard}>
+                                    <ActionHome style={{ marginRight: 24}} />
+                                    <input id="copyurl"
+                                        hidden="true" onCopy={this.handleCopy}
+                                         />
+                                </IconButton>
+                            </ReactCopyButtonWrapper>
                         <ToolbarSeparator />
                         <ExecuteQueryButton query={this.props.query}/>
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>

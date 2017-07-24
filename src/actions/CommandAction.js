@@ -7,9 +7,10 @@ function buildQuery(query,setting, isStreaming){
     const stmt = isStreaming? "/stream?expr=": "/sql?stmt="
     return host + ":" + port + "/solr/" + collection + stmt + query
 }
-export function sqlCommand(query,setting){
+export function executeCommand(query, setting){
     return function(dispatch){
-        const url = buildQuery(query,setting,false)
+        const url = query.startsWith("select") ? buildQuery(query,setting,false)
+        : buildQuery(query,setting,true)
         axios.get(url).then((response)=>{
             let data = response.data
             if(data['result-set']){
@@ -24,25 +25,9 @@ export function sqlCommand(query,setting){
         });
     }
 }
-export function streamingCommand(query,setting){
+export function sqlCommand(query,setting){
     return function(dispatch){
-        const url = buildQuery(query, setting, true)
-        axios.get(url).then((response)=>{
-            let data = response.data
-            if(data['result-set']){
-                data.docs = data['result-set'].docs
-                const info = data.docs.pop()
-                if(data.docs.length < 2){
-                    data = info
-                }else{
-                    data.responseTime = info['RESPONSE_TIME']
-                }
-            }
-            response.data.url = url
-            dispatch({type: "EXECUTE_QUERY", payload : data})
-        }).catch(error => {
-            console.log(error.message)
-            dispatch({ type: "EXECUTE_QUERY_ERROR", payload: error.message })
-        });
+        const url = buildQuery(query,setting,false)
+
     }
 }

@@ -7,8 +7,7 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import { bindActionCreators } from 'redux'
 import {sqlCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
-import SQLExecuteButton from './SQLExecuteButton'
-import StreamExecuteButton from './StreamExecuteButton'
+import ExecuteQueryButton from './ExecuteQueryButton'
 import ActionHome from 'material-ui/svg-icons/content/content-paste'
 import ExportData from 'material-ui/svg-icons/file/file-download'
 import {CSVDownload, CSVLink} from 'react-csv'
@@ -22,12 +21,7 @@ class EditorNav extends React.Component {
     constructor(props) {
         super(props);
     }
-    getButton(props){
-        if(this.props.editorMode === "sql"){
-            return <SQLExecuteButton query={props.query}/>
-        }
-        return <StreamExecuteButton query={props.query}/>
-    }
+
     displayTime(){
         return(
             (this.props.time !== undefined)?
@@ -72,7 +66,7 @@ class EditorNav extends React.Component {
                             </IconButton>
 
                         <ToolbarSeparator />
-                        {this.getButton(this.props)}
+                        <ExecuteQueryButton query={this.props.query}/>
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>
                     </ToolbarGroup>
                 </Toolbar>

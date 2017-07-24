@@ -1,10 +1,10 @@
 import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import { bindActionCreators } from 'redux'
-import {sqlCommand} from '../../actions/CommandAction'
+import {executeCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
 
-class SQLExecuteButton extends React.Component {
+class ExecuteQueryButton extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -15,21 +15,20 @@ class SQLExecuteButton extends React.Component {
             textAlign: 'right'
         }
         return (
-                <RaisedButton id="execute-sql"
+                <RaisedButton id="execute-command"
                               label="Execute"
                               primary={true}
                               style={btnStyle}
-                              onTouchTap={()=> this.props.sqlCommand(this.props.query,this.props.setting)} />
+                              onTouchTap={()=> this.props.executeCommand(this.props.query, this.props.setting)} />
     )
     }
 }
 function matchDispatchToProps(dispatch){
-    return bindActionCreators({sqlCommand:sqlCommand}, dispatch)
+    return bindActionCreators({executeCommand:executeCommand}, dispatch)
 }
 const mapStateToProps = (state) => {
     return {
-        setting: state.setting,
-        sqlCommand:sqlCommand
+        setting: state.setting
     }
 }
-export default connect(mapStateToProps,matchDispatchToProps)(SQLExecuteButton)
+export default connect(mapStateToProps, matchDispatchToProps)(ExecuteQueryButton)

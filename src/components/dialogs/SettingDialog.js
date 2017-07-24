@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
+import {white} from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import Divider from 'material-ui/Divider'
@@ -25,8 +26,8 @@ export default class SettingDialog extends React.Component {
 
     render() {
         return (
-            <IconButton label="Modal Dialog" onTouchTap={this.handler} style={{color:"white"}}>
-                <SettingsIcon  />
+            <IconButton label="Modal Dialog" onTouchTap={this.handler}  >
+                <SettingsIcon id="setting-cog" color={white}/>
                 <Dialog id="settings-form"
                         title="Settings"
                         modal={true}

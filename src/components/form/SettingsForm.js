@@ -23,8 +23,7 @@ class SettingsForm extends React.Component {
         }
     }
     componentDidMount(){
-        this.props.getSetting(this.props.setting);
-        this.setState(this.props.setting)
+        this.props.getSetting(this.props.setting)//.then((data) => this.setState(data));
     }
 
     handleChange = (e) => {
@@ -56,15 +55,8 @@ class SettingsForm extends React.Component {
             this.setState({loading:true})
             const {host, port, collection} = this.state
             this.props.saveSettings({host, port, collection})
-            .then(
-                (res)=> {
-                    if(res.error){
-                        this.setState({errors:{global:res.error.message}})
-                    } else {
-                        this.props.handler()
-                    }
-                }
-            )
+            //saved
+            this.props.handler()
         }
     }
 

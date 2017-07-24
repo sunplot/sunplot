@@ -1,20 +1,18 @@
-import {FETCH_SETTING,RECEIVE_SETTING,FETCH_SETTING_ERROR,SAVE_SETTING} from '../actions/SettingsAction'
+import {FETCH_SETTING,RECEIVED_SETTING,FETCH_SETTING_ERROR,SAVE_SETTING} from '../actions/SettingsAction'
 
-const initalState = {
-    host:"http://localhost",
-    port:9191,
-    collection:"films",
-    fetching:false,
-    fetched:false,
-    error:null
+const initialSettingState = {
+    host : "http://localhost",
+    port : 8989,
+    collection : "collection1"
 }
-export default function commandReducer(state = initalState, action){
+
+export default function commandReducer(state = {}, action){
     switch (action.type) {
         case FETCH_SETTING:
             return { ...state, fetching:true}
             break
-        case RECEIVE_SETTING:
-            return { ...state, fetching:false, fetched:true }
+        case RECEIVED_SETTING:
+            return { ...state, fetching:false, fetched:true}
             break
         case FETCH_SETTING_ERROR:
             return {...state, fetching:false, fetched:true, error:action.payload}

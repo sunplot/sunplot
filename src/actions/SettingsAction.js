@@ -1,17 +1,13 @@
 import axios from 'axios'
 export const SAVE_SETTING = 'SAVE_SETTING'
 export const FETCH_SETTING = 'FETCH_SETTING'
-export const RECEIVE_SETTING = 'RECEIVE_SETTING'
+export const RECEIVED_SETTING = 'RECEIVED_SETTING'
 export const FETCH_SETTING_ERROR = 'FETCH_SETTING_ERROR'
 
 export function getSetting(){
-    // return dispatch=> {
-    //     return fetch('/api/settings')
-    //             .then(res => res.json())
-    //             .then(data => dispatch(getSetting())
-    // }
-    return {
-        type: FETCH_SETTING
+    return dispatch=> {
+        dispatch(fetchSetting)
+        dispatch(receivedSetting)
     }
 }
 export function fetchSetting(){
@@ -27,9 +23,9 @@ export function setSetting(payload){
         payload
     }
 }
-export function receivSetting(){
+export function receivedSetting(){
     return {
-        type: RECEIVE_SETTING,
+        type: RECEIVED_SETTING,
 
     }
 }
@@ -37,26 +33,8 @@ export function receivSetting(){
 export function saveSettings(data){
     return dispatch => {
         dispatch(fetchSetting)
-        return axios.post('/api/settings', data).then((response)=>{
-            dispatch(receivSetting)
-            if(response.ok){
-                dispatch(setSetting(data))
-                return response
-            }
-        }).catch(error => {
+        dispatch(receivedSetting)
+        dispatch(setSetting(data))
 
-            dispatch({type:FETCH_SETTING_ERROR, payload:error.message})
-            return {error}
-            throw error
-        });
-    }
-}
-function handleResponse(res){
-    if(!!res && res.ok){
-        return res
-    } else {
-        let error = new Error(res.statusText)
-        return error.response = res
-        throw error
     }
 }

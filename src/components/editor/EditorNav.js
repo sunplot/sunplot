@@ -14,6 +14,7 @@ import {CSVDownload, CSVLink} from 'react-csv'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import PieChart from '../charts/PieChart'
 import Chart from '../charts/Chart'
+import ScatterChart from '../charts/ScatterChart'
 import Divider from 'material-ui/Divider'
 import EditorTable from './EditorTable'
 import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
@@ -114,10 +115,12 @@ class EditorNav extends React.Component {
                     </Tab>
                     <Tab label="Charts" >
                         <div style={{alignItems:"center"}}>{this.displayError()}</div>
+                        <ScatterChart type="Scatter" data={this.props.data}/>
                         <Chart type="Bar" data={this.props.data}/>
                         <Divider />
                         <Chart type="Line" data={this.props.data}/>
                         <PieChart type="Pie" data={this.props.data}/>
+
                     </Tab>
                 </Tabs>
             </div>

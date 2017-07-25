@@ -16,11 +16,11 @@ export default class EditorTable extends React.Component{
         super(props)
     }
     buildBody(data){
-        if(data['result-set']=== undefined){
+        if(!data){
             return
         }
-        var rows = data['result-set'].docs
-        var count = data['result-set'].docs.length
+        var rows = data.docs
+        var count = rows.length
         return rows.map(this.buildRow.bind(this))
     }
     buildRow(row,index){
@@ -35,8 +35,8 @@ export default class EditorTable extends React.Component{
         return <TableHeaderColumn key="tablehc">{data}</TableHeaderColumn>
     }
     buildColumnHeaders(res){
-        if(res['result-set'] === undefined ||res['result-set'].docs.length <1){return}
-        var headers = Object.keys(res['result-set'].docs[0]);
+        if(!res.docs && res.docs.length <1){return}
+        var headers = Object.keys(res.docs[0]);
         return headers.map(this.buildColumnHeader);
     }
     render(){

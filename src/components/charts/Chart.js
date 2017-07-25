@@ -12,8 +12,8 @@ export default class Chart extends React.Component{
         this.updateChart(nextProps);
     }
     updateChart(props) {
-        if(props.data!== undefined && props.data['result-set']!== undefined){
-            const docs = props.data['result-set'].docs
+        if(props.data.docs){
+            const docs = props.data.docs
             const data = {
                 labels: [],
                 series: [[]]

@@ -12,8 +12,8 @@ export default class Pie extends React.Component{
         this.updateChart(nextProps);
     }
     updateChart(props) {
-        if(props.data!== undefined && props.data['result-set']!== undefined){
-            const docs = props.data['result-set'].docs
+        if(props.data){
+            const docs = props.data.docs
             const data = {
                 labels: [],
                 series: []

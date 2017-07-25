@@ -17,7 +17,8 @@ class Editor extends React.Component{
         super(props);
         this.state = {
             query: "select title_year,count(*) from films group by title_year order by title_year desc limit 20",
-            docs : []
+            docs : [],
+            error: this.props.data.error
         };
     }
 
@@ -35,17 +36,10 @@ class Editor extends React.Component{
         }
         const options = {
             lineNumbers: true,
-            // mode:"commonlisp"
             mode: checkMode(this.props.mode),
             vimMode : true
         }
-        const simpleLineChartData = {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-            series: [
 
-                [1, 3, 4, 5, 6]
-              ]
-          }
         return(
             <div id="EditorView">
                 <div>
@@ -66,7 +60,7 @@ class Editor extends React.Component{
 }
 const mapStateToProps = (state) => {
     return {
-        data: state.docs,
+        data: state.queryResponse.state,
     }
 }
 

@@ -34,7 +34,7 @@ class EditorNav extends React.Component {
         )
     }
     downloadCSV(){
-        return(this.props.data.docs !== undefined && this.props.data.docs.length > 1 ?
+        return(this.props.data && this.props.data.docs.length > 1 ?
             <CSVLink data={this.props.data.docs} >
                 <IconButton tooltip="Export as CSV"
                     tooltipPosition="top-left"
@@ -83,7 +83,7 @@ class EditorNav extends React.Component {
                         </div>
                     </Tab>
                     <Tab label="JSON" >
-                        <div><pre>{JSON.stringify(this.props.data.docs, null, 2) }</pre></div>;
+                        <div><pre>{JSON.stringify(this.props.data, null, 2) }</pre></div>;
                     </Tab>
                     <Tab label="Charts" >
                         <Chart type="Bar" data={this.props.data}/>

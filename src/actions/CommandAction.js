@@ -11,17 +11,20 @@ export function executeCommand(query, setting){
     return function(dispatch){
         const url = query.startsWith("select") ? buildQuery(query,setting,false)
         : buildQuery(query,setting,true)
-        axios.get(url).then((response)=>{
-            let data = response.data
-            if(data['result-set']){
-                data.docs = data['result-set'].docs
+        let data = {}
+        data.url = url
+        return axios.get(url).then((response)=>{
+            console.log('we got results')
+            if(response.data['result-set']){
+                data.docs = response.data['result-set'].docs
                 const info = data.docs.pop()
                 data.responsetime = info['RESPONSE_TIME']
             }
-            data.url = url
             dispatch({type: "EXECUTE_QUERY", payload : data})
-        }).catch(error => {
-            dispatch({ type: "EXECUTE_QUERY_ERROR", payload: error.message })
+        })
+        .catch(error => {
+            data.error = error.message
+            dispatch({ type: "EXECUTE_QUERY_ERROR", payload: data })
         });
     }
 }

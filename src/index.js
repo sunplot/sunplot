@@ -15,9 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
         <Router>
             <Switch>
-                <Route path="/sql" component={App} />
-                <Route path="/streaming" component={App} />
-                <Route path="/" component={SolrList} />
+                <Route path="/" component={App} />
             </Switch>
         </Router>
     </Provider>,

@@ -3,8 +3,7 @@ import SolrReducer from './SolrReducer'
 import CommandReducer from './CommandReducer'
 import SettingReducer from './SettingReducer'
 
-
 export default combineReducers({
         solrs:SolrReducer,
-        docs:CommandReducer,
+        queryResponse:CommandReducer,
         setting:SettingReducer})

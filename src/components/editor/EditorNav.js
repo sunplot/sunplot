@@ -26,7 +26,7 @@ class EditorNav extends React.Component {
 
     displayTime(){
         return(
-            (this.props.time !== undefined)?
+            (this.props.time && this.props.time > 0 )?
                     <div>
                         <h4 style={{paddingLeft:"10",
                                 color:"rgb(96, 125, 139)",
@@ -46,6 +46,7 @@ class EditorNav extends React.Component {
             </CSVLink>
             :<div></div>)
     }
+
     displayJSON(){
         const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
 
@@ -56,6 +57,7 @@ class EditorNav extends React.Component {
             </div>
         )
     }
+
     displayError(){
         if(this.props.data.error){
             return <p style={{
@@ -73,6 +75,22 @@ class EditorNav extends React.Component {
         return
     }
 
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    displayChart(){
+        if(this.props.data.docs.length > 0 && this.props.data.docs[0].plot){
+            const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
+            return(
+                <Tab label="Charts" >
+                    <div style={{alignItems:"center"}}>{this.displayError()}</div>
+                    <Chart type={chartType} data={this.props.data.docs[0].data}/>
+                    <Divider />
+                </Tab>
+            )
+        }
+    }
     render(){
 
         return (
@@ -104,24 +122,16 @@ class EditorNav extends React.Component {
                     </ToolbarGroup>
                 </Toolbar>
                 <Tabs>
+                    <Tab label="JSON" >
+                        <div><pre>{this.displayJSON()}</pre></div>;
+                    </Tab>
                     <Tab label="Table" >
                         <div>
                             <div style={{alignItems:"center"}}>{this.displayError()}</div>
                             <EditorTable data={this.props.data} />
                         </div>
                     </Tab>
-                    <Tab label="JSON" >
-                        <div><pre>{this.displayJSON()}</pre></div>;
-                    </Tab>
-                    <Tab label="Charts" >
-                        <div style={{alignItems:"center"}}>{this.displayError()}</div>
-                        <ScatterChart type="Scatter" data={this.props.data}/>
-                        <Chart type="Bar" data={this.props.data}/>
-                        <Divider />
-                        <Chart type="Line" data={this.props.data}/>
-                        <PieChart type="Pie" data={this.props.data}/>
-
-                    </Tab>
+                    {this.displayChart()}
                 </Tabs>
             </div>
     )

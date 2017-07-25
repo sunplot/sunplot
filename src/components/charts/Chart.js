@@ -11,9 +11,24 @@ export default class Chart extends React.Component{
     componentWillReceiveProps(nextProps) {
         this.updateChart(nextProps);
     }
+
+    buildScatter(){
+        return  {
+            fullWidth: true,
+            height:400,
+            showLine: false,
+            axisX: {
+                labelInterpolationFnc: function(value, index) {
+                    return index % 13 === 0 ? 'W' + value : null;
+                }
+            }
+        }
+    }
+
+
     updateChart(props) {
-        if(props.data.docs){
-            const docs = props.data.docs
+        if(props.data){
+            const docs = props.data
             const data = {
                 labels: [],
                 series: [[]]
@@ -23,14 +38,35 @@ export default class Chart extends React.Component{
                 data.series[0].push(Object.values(doc)[1])
             ))
 
-            const options =  {
+            let options =  {
                 fullWidth: true,
                 height:400,
                 chartPadding: {
                     right: 40
                 }
             }
-            return new Chartist[props.type]('#' + props.type + 'Chart', data, options);
+            let chart = {}
+            switch (props.type) {
+                case "Pie":
+                let pieData = {series:data.series[0]}
+                chart = new Chartist.Pie('#PieChart', pieData, {
+                  height:400,
+                  donut: true,
+                  showLabel: false
+                });
+                break
+                case "Scatter":
+                    chart = new Chartist['Line']('#' + props.type + 'Chart', data, this.buildScatter());
+                    break
+                case "Bar":
+                    chart = new Chartist['Bar']('#' + props.type + 'Chart', data, options);
+                    break
+                default:
+                    chart = new Chartist['Line']('#' + props.type + 'Chart', data, options);
+                    break
+            }
+
+            return chart
         }
     }
 

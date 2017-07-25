@@ -16,7 +16,7 @@ export default class EditorTable extends React.Component{
         super(props)
     }
     buildBody(data){
-        if(!data){
+        if(!data.docs){
             return
         }
         var rows = data.docs
@@ -35,24 +35,28 @@ export default class EditorTable extends React.Component{
         return <TableHeaderColumn key="tablehc">{data}</TableHeaderColumn>
     }
     buildColumnHeaders(res){
-        if(!res.docs && res.docs.length <1){return}
-        var headers = Object.keys(res.docs[0]);
-        return headers.map(this.buildColumnHeader);
+        if(!res.docs || res.docs.length <1){
+            return
+        }
+        let headers = Object.keys(res.docs[0])
+        return headers.map(this.buildColumnHeader)
     }
+
     render(){
         if(this.props.data === undefined || Object.keys(this.props.data).length < 1){
             return(<Table />)
         }
         return(
-
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false} >
-            <TableRow>{this.buildColumnHeaders(this.props.data)}</TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false} stripedRows={false} showRowHover={true}>
-            {this.buildBody(this.props.data)}
-          </TableBody>
-        </Table>
+        <div>
+            <Table selectable={false}>
+              <TableHeader displaySelectAll={false} adjustForCheckbox={false} >
+                <TableRow>{this.buildColumnHeaders(this.props.data)}</TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false} stripedRows={false} showRowHover={true}>
+                {this.buildBody(this.props.data)}
+              </TableBody>
+            </Table>
+        </div>
       );
     }
 }

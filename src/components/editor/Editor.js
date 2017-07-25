@@ -18,7 +18,6 @@ class Editor extends React.Component{
         this.state = {
             query: "select title_year,count(*) from films group by title_year order by title_year desc limit 20",
             docs : [],
-            error: this.props.data.error
         };
     }
 
@@ -49,6 +48,7 @@ class Editor extends React.Component{
                             options={options} />
                     </Paper>
                 </div>
+                
                 <EditorNav time={this.props.data.responsetime}
                            query={this.state.query}
                            editorMode={this.props.mode}

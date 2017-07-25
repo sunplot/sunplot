@@ -6,7 +6,7 @@ export default function commandReducer(state = {}, action){
             return { state:action.payload, err:null}
             break;
         case "EXECUTE_QUERY_ERROR":
-            return { ...state, error:action.payload};
+            return { state:action.payload};
             break;
     }
     return state

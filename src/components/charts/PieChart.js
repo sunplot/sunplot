@@ -12,7 +12,7 @@ export default class Pie extends React.Component{
         this.updateChart(nextProps);
     }
     updateChart(props) {
-        if(props.data){
+        if(props.data.docs){
             const docs = props.data.docs
             const data = {
                 labels: [],

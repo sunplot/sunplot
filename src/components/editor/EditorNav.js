@@ -34,7 +34,7 @@ class EditorNav extends React.Component {
         )
     }
     downloadCSV(){
-        return(this.props.data && this.props.data.docs.length > 1 ?
+        return(this.props.data.docs && this.props.data.docs.length > 1 ?
             <CSVLink data={this.props.data.docs} >
                 <IconButton tooltip="Export as CSV"
                     tooltipPosition="top-left"
@@ -44,6 +44,32 @@ class EditorNav extends React.Component {
                 </IconButton>
             </CSVLink>
             :<div></div>)
+    }
+    displayJSON(){
+        const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
+
+        return(
+            <div style={jsonStyle}>
+
+            {JSON.stringify(this.props.data, null, 2) }
+            </div>
+        )
+    }
+    displayError(){
+        if(this.props.data.error){
+            return <p style={{
+                            display: "inline-block",
+                            fontFamily: "Roboto, sans-serif",
+                            textDecoration: "none",
+                            fontSize: "14px",
+                            fontWeight: 500,
+                            position: "relative",
+                            color: "red",
+                            alignItems:"center",
+                            justifyContent:"center",
+                            color:"red"}}>{this.props.data.error}</p>
+        }
+        return
     }
 
     render(){
@@ -79,13 +105,15 @@ class EditorNav extends React.Component {
                 <Tabs>
                     <Tab label="Table" >
                         <div>
+                            <div style={{alignItems:"center"}}>{this.displayError()}</div>
                             <EditorTable data={this.props.data} />
                         </div>
                     </Tab>
                     <Tab label="JSON" >
-                        <div><pre>{JSON.stringify(this.props.data, null, 2) }</pre></div>;
+                        <div><pre>{this.displayJSON()}</pre></div>;
                     </Tab>
                     <Tab label="Charts" >
+                        <div style={{alignItems:"center"}}>{this.displayError()}</div>
                         <Chart type="Bar" data={this.props.data}/>
                         <Divider />
                         <Chart type="Line" data={this.props.data}/>

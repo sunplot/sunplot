@@ -8,7 +8,6 @@ import Sidebar from '../components/Sidebar'
 import Editor from '../components/editor/Editor'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import classnames from 'classnames'
-import {Footer} from '../components/Footer'
 import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
@@ -44,8 +43,8 @@ class App extends React.Component{
                         </AppBar>
                     </div>
                     <Editor mode={this.state.editorMode}/>
-
                 </div>
+
             </MuiThemeProvider>
         );
     }

@@ -49,10 +49,9 @@ class Editor extends React.Component{
                     </Paper>
                 </div>
 
-                <EditorNav time={this.props.data.responsetime}
+                <EditorNav
                            query={this.state.query}
                            editorMode={this.props.mode}
-                           url={this.props.data.url}
                            data={this.props.data}/>
             </div>
       );

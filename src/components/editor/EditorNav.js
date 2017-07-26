@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 import { bindActionCreators } from 'redux'
-import {sqlCommand} from '../../actions/CommandAction'
+import {executeCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
 import ExecuteQueryButton from './ExecuteQueryButton'
 import ActionHome from 'material-ui/svg-icons/content/content-paste'
@@ -23,54 +23,60 @@ class EditorNav extends React.Component {
     }
 
     displayTime(){
-        return(
-            (this.props.time && this.props.time > 0 )?
-                    <div>
-                        <h4 style={{paddingLeft:"10",
-                                color:"rgb(96, 125, 139)",
-                                fontFamily: "Roboto, sans-serif"}}>{"Response time: " + this.props.time}</h4>
-                    </div>:<div></div>
-        )
+        if(this.props.data){
+            return(
+                (this.props.data.time && this.props.data.time > 0 )?
+                        <div>
+                            <h4 style={{paddingLeft:10,
+                                    color:"rgb(96, 125, 139)",
+                                    fontFamily: "Roboto, sans-serif"}}>{"Response time: " + this.props.time}</h4>
+                        </div>:<div></div>
+            )
+        }
     }
     downloadCSV(){
-        return(this.props.data.docs && this.props.data.docs.length > 1 ?
-            <CSVLink data={this.props.data.docs} >
-                <IconButton tooltip="Export as CSV"
-                    tooltipPosition="top-left"
-                    iconStyle={{width: 48,height: 48}}
-                    style={{ width: 96, height: 96,padding: 24}}>
-                    <ExportData style={{ marginRight: 24}} />
-                </IconButton>
-            </CSVLink>
-            :<div></div>)
+        if(this.props.data){
+            return(this.props.data.docs && this.props.data.docs.length > 1 ?
+                <CSVLink data={this.props.data.docs} >
+                    <IconButton tooltip="Export as CSV"
+                        tooltipPosition="top-left"
+                        iconStyle={{width: 48,height: 48}}
+                        style={{ width: 96, height: 96,padding: 24}}>
+                        <ExportData style={{ marginRight: 24}} />
+                    </IconButton>
+                </CSVLink>
+                :<div></div>)
+        }
     }
 
     displayJSON(){
-        const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
-
-        return(
-            <div style={jsonStyle}>
-
-            {JSON.stringify(this.props.data, null, 2) }
-            </div>
-        )
+        if(this.props.data){
+            const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
+            return(
+                <div style={jsonStyle}>
+                {JSON.stringify(this.props.data, null, 2) }
+                </div>
+            )
+        }
     }
 
     displayError(){
-        if(this.props.data.error){
-            return <p style={{
-                            display: "inline-block",
-                            fontFamily: "Roboto, sans-serif",
-                            textDecoration: "none",
-                            fontSize: "14px",
-                            fontWeight: 500,
-                            position: "relative",
-                            color: "red",
-                            alignItems:"center",
-                            justifyContent:"center",
-                            color:"red"}}>{this.props.data.error}</p>
+        if(this.props.data){
+            if(this.props.data.error){
+                return <p style={{
+                                display: "inline-block",
+                                fontFamily: "Roboto, sans-serif",
+                                textDecoration: "none",
+                                fontSize: "14px",
+                                fontWeight: 500,
+                                position: "relative",
+                                color: "red",
+                                alignItems:"center",
+                                justifyContent:"center",
+                                color:"red"}}>{this.props.data.error}</p>
+            }
+            return
         }
-        return
     }
 
     capitalizeFirstLetter(string) {
@@ -78,15 +84,17 @@ class EditorNav extends React.Component {
     }
 
     displayChart(){
-        if(this.props.data.docs.length > 0 && this.props.data.docs[0].plot){
-            const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
-            return(
-                <Tab label="Charts" >
-                    <div style={{alignItems:"center"}}>{this.displayError()}</div>
-                    <Chart type={chartType} data={this.props.data.docs[0].data}/>
-                    <Divider />
-                </Tab>
-            )
+        if(this.props.data && !this.props.data.error && this.props.data.docs){
+            if(this.props.data.docs.length > 1 && this.props.data.docs[0].plot){
+                const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
+                return(
+                    <Tab label="Charts" >
+                        <div style={{alignItems:"center"}}>{this.displayError()}</div>
+                        <Chart type={chartType} data={this.props.data.docs[0].data}/>
+                        <Divider />
+                    </Tab>
+                )
+            }
         }
     }
     render(){
@@ -136,6 +144,6 @@ class EditorNav extends React.Component {
     }
 }
 function matchDispatchToProps(dispatch){
-    return bindActionCreators({sqlCommand:sqlCommand}, dispatch)
+    return bindActionCreators({executeCommand:executeCommand}, dispatch)
 }
-export default connect(null,matchDispatchToProps)(EditorNav)
+export default connect(null, matchDispatchToProps)(EditorNav)

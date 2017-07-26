@@ -49,20 +49,20 @@ export default class Chart extends React.Component{
             switch (props.type) {
                 case "Pie":
                 let pieData = {series:data.series[0]}
-                chart = new Chartist.Pie('#PieChart', pieData, {
+                chart = new Chartist.Pie('#Chart', pieData, {
                   height:400,
                   donut: true,
                   showLabel: false
                 });
                 break
                 case "Scatter":
-                    chart = new Chartist['Line']('#' + props.type + 'Chart', data, this.buildScatter());
+                    chart = new Chartist['Line']('#Chart', data, this.buildScatter());
                     break
                 case "Bar":
-                    chart = new Chartist['Bar']('#' + props.type + 'Chart', data, options);
+                    chart = new Chartist['Bar']('#Chart', data, options);
                     break
                 default:
-                    chart = new Chartist['Line']('#' + props.type + 'Chart', data, options);
+                    chart = new Chartist['Line']('#Chart', data, options);
                     break
             }
 
@@ -72,7 +72,7 @@ export default class Chart extends React.Component{
 
     render() {
         return (
-            <div id={this.props.type + 'Chart'} className="chart" ></div>
+            <div id="Chart" className="chart" ></div>
         )
     }
 }

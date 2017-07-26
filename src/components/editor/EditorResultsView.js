@@ -59,7 +59,7 @@ class EditorResultsView extends React.Component {
 
     displayChart(){
         if(this.props.data && !this.props.data.error && this.props.data.docs){
-            if(this.props.data.docs[0].plot){
+            if(this.props.data.docs.length > 0 && this.props.data.docs[0].plot){
                 const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
                 return(
                     <Tab label="Charts" >

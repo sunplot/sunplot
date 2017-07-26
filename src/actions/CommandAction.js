@@ -36,7 +36,7 @@ export function executeCommand(query, setting){
         : buildQuery(query,setting,true)
         data.url = url
 
-        return axios.get(url).then((response)=>{
+        return axios.get("/query",{params:{data:url}}).then((response)=>{
             console.log('we got results')
             if(response.data['result-set']){
                 data.docs = response.data['result-set'].docs

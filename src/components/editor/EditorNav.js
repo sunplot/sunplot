@@ -25,11 +25,11 @@ class EditorNav extends React.Component {
     displayTime(){
         if(this.props.data){
             return(
-                (this.props.data.time && this.props.data.time > 0 )?
+                (this.props.data.responsetime && this.props.data.responsetime > 0 )?
                         <div>
                             <h4 style={{paddingLeft:10,
                                     color:"rgb(96, 125, 139)",
-                                    fontFamily: "Roboto, sans-serif"}}>{"Response time: " + this.props.time}</h4>
+                                    fontFamily: "Roboto, sans-serif"}}>{"Response time: " + this.props.data.responsetime}</h4>
                         </div>:<div></div>
             )
         }
@@ -54,7 +54,7 @@ class EditorNav extends React.Component {
             const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
             return(
                 <div style={jsonStyle}>
-                {JSON.stringify(this.props.data, null, 2) }
+                {JSON.stringify(this.props.data.docs, null, 2) }
                 </div>
             )
         }

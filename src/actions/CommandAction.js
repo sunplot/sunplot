@@ -2,6 +2,7 @@ import axios from 'axios'
 export const EXECUTE_QUERY = "EXECUTE_QUERY"
 export const EXECUTE_QUERY_ERROR = "EXECUTE_QUERY_ERROR"
 export const QUERY_RECEIVED = "QUERY_RECEIVED"
+
 function buildQuery(query,setting, isStreaming){
     const host = setting.host
     const port = setting.port
@@ -15,13 +16,26 @@ const isSql = (query) => {
     }
     return false
 }
+
+export function getQuery(payload){
+    return {
+        type : EXECUTE_QUERY,
+        payload
+    }
+}
+
 export function executeCommand(query, setting){
     return function(dispatch){
+        let data = {}
+        data.docs = []
+        dispatch(getQuery(data))
+        if(query.startsWith("//")){
+            return
+        }
         const url = isSql(query) ? buildQuery(query,setting,false)
         : buildQuery(query,setting,true)
-        let data = {}
         data.url = url
-        dispatch({type:EXECUTE_QUERY})
+
         return axios.get(url).then((response)=>{
             console.log('we got results')
             if(response.data['result-set']){

@@ -3,7 +3,7 @@ export default function commandReducer(state = {}, action){
     console.log("command" ,action.type)
     switch (action.type) {
         case EXECUTE_QUERY:
-            return { state: {}, err:null}
+            return { state: undefined, err:null}
             break;
         case QUERY_RECEIVED:
             return { state: action.payload, err:null}

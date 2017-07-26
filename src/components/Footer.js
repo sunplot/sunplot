@@ -8,7 +8,7 @@ export const Footer = (props) => {
     }
     return(
         <footer id="footer" style={style}>
-            {/* <h3>Sunplot 2017</h3>*/}
+             <h3>Sunplot 2017</h3>
         </footer>
         )
     }

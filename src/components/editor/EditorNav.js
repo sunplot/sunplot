@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import {executeCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
 import ExecuteQueryButton from './ExecuteQueryButton'
+import EditorResultsView from './EditorResultsView'
 import ActionHome from 'material-ui/svg-icons/content/content-paste'
 import ExportData from 'material-ui/svg-icons/file/file-download'
 import {CSVDownload, CSVLink} from 'react-csv'
@@ -48,53 +49,27 @@ class EditorNav extends React.Component {
                 :<div></div>)
         }
     }
-
-    displayJSON(){
-        if(this.props.data){
-            const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
-            return(
-                <div style={jsonStyle}>
-                {JSON.stringify(this.props.data.docs, null, 2) }
-                </div>
-            )
-        }
-    }
-
-    displayError(){
+    displayResults(){
         if(this.props.data){
             if(this.props.data.error){
-                return <p style={{
-                                display: "inline-block",
-                                fontFamily: "Roboto, sans-serif",
-                                textDecoration: "none",
-                                fontSize: "14px",
-                                fontWeight: 500,
-                                position: "relative",
-                                color: "red",
-                                alignItems:"center",
-                                justifyContent:"center",
-                                color:"red"}}>{this.props.data.error}</p>
-            }
-            return
-        }
-    }
-
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    displayChart(){
-        if(this.props.data && !this.props.data.error && this.props.data.docs){
-            if(this.props.data.docs[0].data.length > 1 && this.props.data.docs[0].plot){
-                const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
                 return(
-                    <Tab label="Charts" >
-                        <div style={{alignItems:"center"}}>{this.displayError()}</div>
-                        <Chart type={chartType} data={this.props.data.docs[0].data}/>
-                        <Divider />
+                <Tabs>
+                    <Tab id="error-tab" label="Ooops..." style={{backgroundColor:"red"}} >
+                        <p style={{
+                                        display: "inline-block",
+                                        fontFamily: "Roboto, sans-serif",
+                                        textDecoration: "none",
+                                        fontSize: "14px",
+                                        fontWeight: 500,
+                                        position: "relative",
+                                        color: "red",
+                                        alignItems:"center",
+                                        justifyContent:"center",
+                                        color:"red"}}>{this.props.data.error}</p>
                     </Tab>
-                )
+                </Tabs>)
             }
+            return <EditorResultsView data={this.props.data} />
         }
     }
     render(){
@@ -127,18 +102,8 @@ class EditorNav extends React.Component {
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>
                     </ToolbarGroup>
                 </Toolbar>
-                <Tabs>
-                    <Tab label="JSON" >
-                        <div><pre>{this.displayJSON()}</pre></div>;
-                    </Tab>
-                    <Tab label="Table" >
-                        <div>
-                            <div style={{alignItems:"center"}}>{this.displayError()}</div>
-                            <EditorTable data={this.props.data} />
-                        </div>
-                    </Tab>
-                    {this.displayChart()}
-                </Tabs>
+                {this.displayResults()}
+
             </div>
     )
     }

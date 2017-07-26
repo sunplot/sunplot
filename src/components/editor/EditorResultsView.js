@@ -59,12 +59,12 @@ class EditorResultsView extends React.Component {
 
     displayChart(){
         if(this.props.data && !this.props.data.error && this.props.data.docs){
-            if(this.props.data.docs[0].data.length > 1 && this.props.data.docs[0].plot){
+            if(this.props.data.docs[0].plot){
                 const chartType = this.capitalizeFirstLetter(this.props.data.docs[0].plot)
                 return(
                     <Tab label="Charts" >
                         <div style={{alignItems:"center"}}>{this.displayError()}</div>
-                        <Chart type={chartType} data={this.props.data.docs[0].data}/>
+                        <Chart type={chartType} data={this.props.data.docs}/>
                         <Divider />
                     </Tab>
                 )

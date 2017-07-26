@@ -16,7 +16,7 @@ class Editor extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            query: "let(a=array(1,2,3,4,5), b=array(1, 4, 7,8,3), plot(type=Line, x=a, y=b))",
+            query: "list(tuple(plot=scatter, x=array(1,2,3), y=array(13,34,15)),tuple(plot=scatter, x=array(1,2,3), y=array(23,14,25)))",
             docs : [],
         };
     }

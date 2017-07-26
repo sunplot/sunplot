@@ -24,19 +24,35 @@ export default class Chart extends React.Component{
             }
         }
     }
-
-
     updateChart(props) {
         if(props.data){
-            const docs = props.data
+            const size = props.data.length
+            const myseries = new Array(size)
             const data = {
                 labels: [],
-                series: [[]]
+                series: [[1,2,3]]
             }
-            docs.map(doc=>(
-                data.labels.push(Object.values(doc)[0]),
-                data.series[0].push(Object.values(doc)[1])
-            ))
+            let docs = []
+
+            if(props.data.length === 1){
+                docs = props.data[0].data
+                docs.map(doc=>{
+                    console.log("let do it ", doc)
+                    data.labels.push(Object.values(doc)[0]),
+                    data.series[0].push(Object.values(doc)[1])
+                })
+
+            }
+            if(props.data.length > 1){
+                props.data.map((chartdoc,index) => {
+                    let val = Object.values(chartdoc)[2]
+                    myseries[index] = val
+                    if(index === 0 ){
+                        data.labels = (Object.values(chartdoc)[1])
+                    }
+                })
+                data.series = myseries
+            }
 
             let options =  {
                 fullWidth: true,

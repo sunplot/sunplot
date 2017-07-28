@@ -16,7 +16,7 @@ class Editor extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            query: "list(tuple(plot=scatter, x=array(1,2,3), y=array(13,34,15)),tuple(plot=scatter, x=array(1,2,3), y=array(23,14,25)))",
+            query: "//code",
             docs : [],
         };
     }
@@ -36,7 +36,7 @@ class Editor extends React.Component{
         const options = {
             lineNumbers: true,
             mode: checkMode(this.props.mode),
-            vimMode : true
+            vimMode : false
         }
 
         return(

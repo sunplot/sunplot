@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import { Provider } from 'react-redux'
-import registerServiceWorker from './registerServiceWorker'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import store from './store'
 import App from './containers/App';
@@ -20,4 +19,3 @@ ReactDOM.render(
         </Router>
     </Provider>,
     document.getElementById('root'));
-registerServiceWorker();

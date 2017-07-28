@@ -10,10 +10,14 @@ export const loadState = () => {
     }
 }
 export const saveState = (state) => {
-    try {
-        const serializedSate = JSON.stringify(state)
-        localStorage.setItem('state',serializedSate)
-    } catch (err) {
-        console.log("Error save to browser storage ",err)
+        //Only intrested in presisting setting state.
+        if(state.setting){
+        try {
+            const setting = {setting: state.setting} 
+            const serializedSate = JSON.stringify(setting)
+            localStorage.setItem('state',serializedSate)
+        } catch (err) {
+            console.log("Error, unable to save to browser storage ",err)
+        }
     }
 }

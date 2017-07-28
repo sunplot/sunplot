@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { bindActionCreators } from 'redux'
 import {executeCommand} from '../../actions/CommandAction'
 import {connect} from 'react-redux'
-
+import {orange400} from 'material-ui/styles/colors'
 class ExecuteQueryButton extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +19,7 @@ class ExecuteQueryButton extends React.Component {
                               label="Execute"
                               primary={true}
                               style={btnStyle}
+
                               onTouchTap={()=> this.props.executeCommand(this.props.query, this.props.setting)} />
     )
     }

@@ -17,7 +17,7 @@ class Editor extends React.Component{
         super(props);
         this.state = {
             query: "//code",
-            docs : [],
+            docs : []
         };
     }
 

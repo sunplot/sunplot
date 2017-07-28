@@ -26,7 +26,7 @@ export default class SettingDialog extends React.Component {
 
     render() {
         return (
-            <IconButton label="Modal Dialog" onTouchTap={this.handler}  >
+            <IconButton label="Modal Dialog" onTouchTap={this.handler} style={{paddingTop:"20px"}} >
                 <SettingsIcon id="setting-cog" />
                 <Dialog id="settings-form"
                         title="Settings"

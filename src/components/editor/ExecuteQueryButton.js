@@ -19,7 +19,6 @@ class ExecuteQueryButton extends React.Component {
                               label="Execute"
                               primary={true}
                               style={btnStyle}
-
                               onTouchTap={()=> this.props.executeCommand(this.props.query, this.props.setting)} />
     )
     }

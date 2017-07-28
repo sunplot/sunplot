@@ -38,9 +38,7 @@ class App extends React.Component{
         this.state = {
             editorMode : props.location.pathname.slice(1)
         }
-
     }
-
     render(){
         return (
             <MuiThemeProvider muiTheme={sunplotTheme}>
@@ -48,7 +46,7 @@ class App extends React.Component{
                     <div className={classnames('app-bar', {'expanded': this.state.menuOpen})}>
                         <AppBar title="Sunplot"
                             style={{backgroundColor:"white"}}
-                            iconElementLeft={<IconButton><Logo /></IconButton>}
+                            iconElementLeft={<IconButton ><Logo /></IconButton>}
                             iconElementRight={<SettingsDialog />}>
                         </AppBar>
                     </div>

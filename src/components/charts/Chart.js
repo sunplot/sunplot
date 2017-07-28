@@ -30,14 +30,13 @@ export default class Chart extends React.Component{
             const myseries = new Array(size)
             const data = {
                 labels: [],
-                series: [[1,2,3]]
+                series: [[]]
             }
             let docs = []
 
             if(props.data.length === 1){
                 docs = props.data[0].data
                 docs.map(doc=>{
-                    console.log("let do it ", doc)
                     data.labels.push(Object.values(doc)[0]),
                     data.series[0].push(Object.values(doc)[1])
                 })

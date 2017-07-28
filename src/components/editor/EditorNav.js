@@ -17,7 +17,6 @@ import Chart from '../charts/Chart'
 import Divider from 'material-ui/Divider'
 import EditorTable from './EditorTable'
 import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
-
 class EditorNav extends React.Component {
     constructor(props) {
         super(props);

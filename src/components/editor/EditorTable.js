@@ -43,7 +43,7 @@ export default class EditorTable extends React.Component{
     }
 
     render(){
-        if(this.props.data === undefined || Object.keys(this.props.data).length < 1){
+        if(this.props.data.docs === undefined || Object.keys(this.props.data.docs).length < 1){
             return(<Table />)
         }
         return(

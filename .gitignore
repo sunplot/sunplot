@@ -52,4 +52,4 @@ bin/
 test-output/
 .settings/
 node_modules/
-
+build/

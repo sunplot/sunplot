@@ -23,11 +23,25 @@ export default class EditorTable extends React.Component{
         let count = rows.length
         return rows.map(this.buildRow.bind(this))
     }
+    extractData(data){
+        let newObj = data[0]
+        if(Object.keys(newObj).length === 1){
+            this.extractData(newObj)
+        }
+        if(Array.isArray(newObj)){
+            return newObj
+        } else {
+            return Object.values(newObj)
+        }
+    }
     buildRow(row,index){
         let fields = Object.values(row);
-        if(Array.isArray(fields)){
-            Object.keys(fields).forEach((key)=> Object.value )
+        let size = fields.length
+        if(size === 1){
+            let extractedData = this.extractData(fields)
+            return <TableRow key={"trow-" + index}>{extractedData.map(this.buildRowColumn)}</TableRow>
         }
+        return <TableRow key={"trow-" + index}>{fields.map(this.buildRowColumn)}</TableRow>
     }
     buildRowColumn(rowColData, index){
         return <TableRowColumn key={"rowcol-" + index}>{rowColData}</TableRowColumn>
@@ -39,6 +53,9 @@ export default class EditorTable extends React.Component{
     buildColumnHeaders(res){
         if(!res.docs || res.docs.length <1){
             return
+        }
+        if(res.docs.length === 1){
+
         }
         let headers = Object.keys(res.docs[0])
         return headers.map(this.buildColumnHeader)

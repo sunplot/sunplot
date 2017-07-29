@@ -19,13 +19,15 @@ export default class EditorTable extends React.Component{
         if(!data.docs){
             return
         }
-        var rows = data.docs
-        var count = rows.length
+        let rows = data.docs
+        let count = rows.length
         return rows.map(this.buildRow.bind(this))
     }
     buildRow(row,index){
-        var fields = Object.values(row);
-        return <TableRow key={"trow-" + index}>{fields.map(this.buildRowColumn)}</TableRow>
+        let fields = Object.values(row);
+        if(Array.isArray(fields)){
+            Object.keys(fields).forEach((key)=> Object.value )
+        }
     }
     buildRowColumn(rowColData, index){
         return <TableRowColumn key={"rowcol-" + index}>{rowColData}</TableRowColumn>

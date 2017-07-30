@@ -34,6 +34,14 @@ export default class EditorTable extends React.Component{
             return Object.values(newObj)
         }
     }
+    extractHeaders(data){
+        let newObj = Array.isArray(data) ? data[0] : data
+        if(Object.keys(newObj).length === 1){
+            return this.extractHeaders(Object.values(newObj))
+        }
+        console.log(Object.keys(newObj))
+        return Object.keys(newObj)
+    }
     buildRow(row,index){
         let fields = Object.values(row);
         let size = fields.length
@@ -54,10 +62,7 @@ export default class EditorTable extends React.Component{
         if(!res.docs || res.docs.length <1){
             return
         }
-        if(res.docs.length === 1){
-
-        }
-        let headers = Object.keys(res.docs[0])
+        let headers = this.extractHeaders(res.docs)
         return headers.map(this.buildColumnHeader)
     }
 

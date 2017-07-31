@@ -43,3 +43,6 @@ body{
   stroke-width: 20px;
 
 }
+::selection {
+background:transparent;
+}

@@ -46,3 +46,14 @@ body{
 ::selection {
 background:transparent;
 }
+.chart-container {
+  position: relative;
+}
+
+.chart-container > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

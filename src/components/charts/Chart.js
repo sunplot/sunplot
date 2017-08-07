@@ -33,7 +33,6 @@ export default class Chart extends React.Component{
                 series: [[]]
             }
             let docs = []
-            console.log(Object.keys(props.data[0]))
             if(Object.keys(props.data[0]).length === 2){
                 docs = props.data[0].data ?props.data[0].data : props.data
                 docs.map(doc=>{

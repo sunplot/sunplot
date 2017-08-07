@@ -39,7 +39,6 @@ export default class EditorTable extends React.Component{
         if(Object.keys(newObj).length === 1){
             return this.extractHeaders(Object.values(newObj))
         }
-        console.log(Object.keys(newObj))
         return Object.keys(newObj)
     }
     buildRow(row,index){

@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 import { bindActionCreators } from 'redux'
-import {executeCommand} from '../../actions/CommandAction'
+import {updateTabsState} from '../../actions/TabsAction'
 import {connect} from 'react-redux'
 import ExecuteQueryButton from './ExecuteQueryButton'
 import ActionHome from 'material-ui/svg-icons/content/content-paste'
@@ -20,7 +20,7 @@ import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
 class EditorResultsView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { activeTab: this.props.activeTab}
+        this.state = this.props.activeTab
     }
 
     displayJSON(){
@@ -54,17 +54,11 @@ class EditorResultsView extends React.Component {
         }
     }
 
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     displayChart(){
         if(this.props.data && !this.props.data.error && this.props.data.docs && this.props.isPlotable){
             if(this.props.data.docs.length > 0 && this.props.data.docs[0].plot ||
             Object.keys(this.props.data.docs[0]).length === 2){
-                let chartType = (this.props.data.docs[0].plot) ?
-                    this.capitalizeFirstLetter(this.props.data.docs[0].plot)
-                    :"Line"
+                let chartType = (this.props.data.docs[0].plot)
                 return(
                     <Tab label="Charts" value={2}>
                         <div style={{alignItems:"center"}}>{this.displayError()}</div>
@@ -75,6 +69,7 @@ class EditorResultsView extends React.Component {
             }
         }
     }
+
     displayTable(){
         if(this.props.data ){
             let tableData = Object.assign({}, this.props.data)
@@ -102,18 +97,18 @@ class EditorResultsView extends React.Component {
         }
     }
     handleChange (value) {
-        this.setState({
-          activeTab: value,
-        })
+        this.props.updateTabsState(value)
     }
-    render(){
 
+    render(){
+        console.log("ACtive tab:",this.props.activeTabs.activeTabs)
         return (
 
             <div>
-                <Tabs value={this.state.activeTab} onChange={this.handleChange.bind(this)}>
+                <Tabs value={this.props.activeTabs.activeTabs} onChange={this.handleChange.bind(this)}>
                     <Tab label="JSON" value={0} >
-                        <div><pre>{this.displayJSON()}</pre></div>;
+                        <div>
+                            <pre>{this.displayJSON()}</pre></div>;
                     </Tab>
                     {this.displayTable()}
                     {this.displayChart()}
@@ -122,7 +117,11 @@ class EditorResultsView extends React.Component {
     )
     }
 }
-function matchDispatchToProps(dispatch){
-    return bindActionCreators({executeCommand:executeCommand}, dispatch)
+
+const mapStateToProps = (state) => {
+    return {
+        activeTabs: state.activeTab
+    }
 }
-export default connect(null, matchDispatchToProps)(EditorResultsView)
+
+export default connect(mapStateToProps, {updateTabsState})(EditorResultsView)

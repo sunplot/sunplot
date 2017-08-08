@@ -17,7 +17,6 @@ import SettingsDialog from '../components/dialogs/SettingDialog'
 
 
 const sunplotTheme = getMuiTheme({
-
     palette: {
         textColor: blueGrey500  ,
         primary1Color: orange400,
@@ -29,10 +28,8 @@ const sunplotTheme = getMuiTheme({
     appBar: {
         height: 50,
       },
-
-
 });
-class App extends React.Component{
+export default class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -57,12 +54,3 @@ class App extends React.Component{
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        solrs: state.solrs,
-        commands: state.commands,
-    }
-}
-
-export default connect(mapStateToProps)(App)

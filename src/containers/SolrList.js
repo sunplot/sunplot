@@ -36,8 +36,7 @@ class SolrList extends React.Component{
 }
 const mapStateToProps = (state) => {
     return {
-        solrs: state.solrs,
-        commands: state.commands,
+        solrs: state.solrs
     }
 }
 

@@ -20,12 +20,9 @@ app.get('/',(req,res)=>{
 app.get('/query',(req,res)=>{
 
     let url = req.query.data
-    console.log("Let call solr",url)
     if(url){
-        console.log("sending request",url)
         axios.get(url).then(response => {
             if(response.data['result-set']){
-                console.log("Here is the response", response.data)
                 res.send(response.data)
             }
 

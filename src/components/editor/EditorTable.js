@@ -51,7 +51,8 @@ export default class EditorTable extends React.Component{
         return <TableRow key={"trow-" + index}>{fields.map(this.buildRowColumn)}</TableRow>
     }
     buildRowColumn(rowColData, index){
-        return <TableRowColumn key={"rowcol-" + index}>{rowColData}</TableRowColumn>
+
+        return <TableRowColumn key={"rowcol-" + index}>{rowColData.toString()}</TableRowColumn>
     }
 
     buildColumnHeader(data){

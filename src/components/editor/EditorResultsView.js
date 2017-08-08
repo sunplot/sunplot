@@ -59,7 +59,7 @@ class EditorResultsView extends React.Component {
     }
 
     displayChart(){
-        if(this.props.data && !this.props.data.error && this.props.data.docs){
+        if(this.props.data && !this.props.data.error && this.props.data.docs && this.props.isPlotable){
             if(this.props.data.docs.length > 0 && this.props.data.docs[0].plot ||
             Object.keys(this.props.data.docs[0]).length === 2){
                 let chartType = (this.props.data.docs[0].plot) ?
@@ -76,7 +76,7 @@ class EditorResultsView extends React.Component {
         }
     }
     displayTable(){
-        if(this.props.data){
+        if(this.props.data ){
             let tableData = Object.assign({}, this.props.data)
             if(!Array.isArray(tableData.docs)|| tableData.docs.length <= 1){
                     if(!Array.isArray(tableData.docs.data)){

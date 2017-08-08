@@ -49,6 +49,9 @@ class EditorNav extends React.Component {
         }
     }
     displayResults(){
+        let isPlotable =
+        this.props.query.trim().toLowerCase().includes("plot") ||
+        this.props.query.trim().toLowerCase().startsWith("select")
         if(this.props.data){
             if(this.props.data.error){
                 return(
@@ -68,7 +71,7 @@ class EditorNav extends React.Component {
                     </Tab>
                 </Tabs>)
             }
-            return <EditorResultsView data={this.props.data} />
+            return <EditorResultsView data={this.props.data} isPlotable={isPlotable}/>
         }
     }
     render(){

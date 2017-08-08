@@ -37,7 +37,7 @@ export default class Chart extends React.Component{
     getLow(item){
         let val = 0
         item.map((x) => {
-            x.data.map((value)=>{
+            x.data.map((value) => {
                 if(value[1] < val){
                     val = value[1]
                 }
@@ -59,63 +59,76 @@ export default class Chart extends React.Component{
 
     updateChart(props) {
         if(props.data){
-            let lowestVal = this.getLow(props.data)
-            let maxVal = this.getMax(props.data)
+            let chartData = props.data
+            let sample = chartData[0].data
+            if(!Array.isArray(sample)){
+                let formattedData = []
+                chartData.map((item) => {
+                    formattedData.push(
+                    [Object.values(item)[0],
+                    Object.values(item)[1]])
+                })
+                chartData = [{
+                    plot : "line",
+                    data : formattedData
+                }]
+            }
+            let lowestVal = this.getLow(chartData)
+            let maxVal = this.getMax(chartData)
             let options =  {
                 fullWidth: true,
                 height:400,
                 axisY: {
                     low: lowestVal,
-                    high: maxVal,
-                    showLabel: false,
-                    showGrid: false,
+                    high: maxVal
                 }
             }
-            if(props.data){
-                if(this.isLinearOnly(props.data)){
-                    //We only need on chart that plots multiple series
+
+            if(this.isLinearOnly(chartData)){
+                //We only need on chart that plots multiple series
+                let data = {
+                    labels: [],
+                    series: [[]]
+                }
+
+                chartData.map((result, index) => {
+                    let docs = []
+                    if(result.data){
+                        result.data.map(doc => {
+                            if(index < 1){
+                                data.labels.push(Object.values(doc)[0])
+                            }
+                            docs.push(Object.values(doc)[1])
+                        })
+                        data.series[index] = docs
+                    }
+                })
+                this.buildChart(chartData.plot, data, options)
+            } else {
+                //We need mulitple charts
+                chartData.map((result, index) => {
                     let data = {
                         labels: [],
                         series: [[]]
                     }
-                    props.data.map((result, index) => {
-                        let docs = []
-                        if(result.data){
-                            result.data.map(doc => {
-                                if(index < 1){
-                                    data.labels.push(Object.values(doc)[0])
-                                }
-                                docs.push(Object.values(doc)[1])
-                            })
-                            data.series[index] = docs
-                        }
-                    })
-                    this.buildChart(props.data.plot, data, options)
-                } else {
-                    //We need mulitple charts
-                    props.data.map((result, index) => {
-                        let data = {
-                            labels: [],
-                            series: [[]]
-                        }
-                        let docs = []
-                        if(result.data){
-                            result.data.map(doc => {
-                                data.labels.push(Object.values(doc)[0]),
-                                data.series[0].push(Object.values(doc)[1])
-                            })
-                        }
-                        if(index > 0){
-                            options.axisX = {
-                                showLabel: false,
-                                showGrid: false
-                            }
 
-                        }
-                        this.buildChart(result.plot, data, options)
-                    })
-                }
+                    if(result.data){
+                        result.data.map(doc => {
+                            data.labels.push(Object.values(doc)[0]),
+                            data.series[0].push(Object.values(doc)[1])
+                        })
+                    }
+                    options.axisY = {
+                        low: lowestVal,
+                        high: maxVal,
+                        showLabel: false,
+                        showGrid: false,
+                    }
+
+                    this.buildChart(result.plot, data, options)
+                })
             }
+
         }
     }
     buildChart(type, data, options){

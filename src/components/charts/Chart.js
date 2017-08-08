@@ -34,14 +34,46 @@ export default class Chart extends React.Component{
         })
         return isTrue
     }
+    getLow(item){
+        let val = 0
+        item.map((x) => {
+            x.data.map((value)=>{
+                if(value[1] < val){
+                    val = value[1]
+                }
+            })
+        })
+        return val
+    }
+    getMax(item){
+        let val = 0
+        item.map((x) => {
+            x.data.map((value)=>{
+                if(value[1] > val){
+                    val = value[1]
+                }
+            })
+        })
+        return val
+    }
+
     updateChart(props) {
         if(props.data){
-            const size = props.data.length
-            const myseries = new Array(size)
-            let charts = []
-
+            let lowestVal = this.getLow(props.data)
+            let maxVal = this.getMax(props.data)
+            let options =  {
+                fullWidth: true,
+                height:400,
+                axisY: {
+                    low: lowestVal,
+                    high: maxVal,
+                    showLabel: false,
+                    showGrid: false,
+                }
+            }
             if(props.data){
                 if(this.isLinearOnly(props.data)){
+                    //We only need on chart that plots multiple series
                     let data = {
                         labels: [],
                         series: [[]]
@@ -58,36 +90,35 @@ export default class Chart extends React.Component{
                             data.series[index] = docs
                         }
                     })
-                    this.buildChart(props.data.plot, data)
-                }
-                else {
-                props.data.map((result) => {
+                    this.buildChart(props.data.plot, data, options)
+                } else {
+                    //We need mulitple charts
+                    props.data.map((result, index) => {
                         let data = {
                             labels: [],
                             series: [[]]
                         }
                         let docs = []
                         if(result.data){
-                            result.data.map(doc=>{
+                            result.data.map(doc => {
                                 data.labels.push(Object.values(doc)[0]),
                                 data.series[0].push(Object.values(doc)[1])
                             })
                         }
-                        this.buildChart(result.plot, data)
+                        if(index > 0){
+                            options.axisX = {
+                                showLabel: false,
+                                showGrid: false
+                            }
+
+                        }
+                        this.buildChart(result.plot, data, options)
                     })
                 }
             }
         }
     }
-    buildChart(type,data){
-        let options =  {
-            fullWidth: true,
-            height:400,
-            chartPadding: {
-                right: 40
-            },
-
-        }
+    buildChart(type, data, options){
 
         let chart = {}
         switch (type) {

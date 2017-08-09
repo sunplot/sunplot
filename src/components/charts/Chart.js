@@ -112,7 +112,7 @@ export default class Chart extends React.Component{
                         data.series[index] = docs
                     }
                 })
-                this.buildChart(chartData.plot, data, options)
+                this.buildChart(chartData[0].plot, data, options)
             } else {
                 //We need mulitple charts
                 chartData.map((result, index) => {

@@ -67,6 +67,10 @@ class EditorResultsView extends React.Component {
                     </Tab>
                 )
             }
+        } else {
+            if(2 === this.props.resultViewTabs.activeTab){
+                this.props.updateTabsState(0)
+            }
         }
     }
 
@@ -101,11 +105,11 @@ class EditorResultsView extends React.Component {
     }
 
     render(){
-        console.log("ACtive tab:",this.props.activeTabs.activeTabs)
+        console.log("ACtive tab:",this.props.resultViewTabs.activeTab)
         return (
 
             <div>
-                <Tabs value={this.props.activeTabs.activeTabs} onChange={this.handleChange.bind(this)}>
+                <Tabs value={this.props.resultViewTabs.activeTab} onChange={this.handleChange.bind(this)}>
                     <Tab label="JSON" value={0} >
                         <div>
                             <pre>{this.displayJSON()}</pre></div>;
@@ -120,7 +124,7 @@ class EditorResultsView extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        activeTabs: state.activeTab
+        resultViewTabs: state.activeTab
     }
 }
 

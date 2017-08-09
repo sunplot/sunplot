@@ -12,18 +12,7 @@ export default class Chart extends React.Component{
         this.updateChart(nextProps);
     }
 
-    buildScatter(){
-        return  {
-            fullWidth: true,
-            height:400,
-            showLine: false,
-            axisX: {
-                labelInterpolationFnc: function(value, index) {
-                    return index % 13 === 0 ? 'W' + value : null;
-                }
-            }
-        }
-    }
+
     isLinearOnly(data){
         let isTrue = true
         data.map((x) => {
@@ -87,6 +76,17 @@ export default class Chart extends React.Component{
             let options =  {
                 fullWidth: true,
                 height:400,
+                fullWidth: true,
+                axisY: {
+                    low: lowestVal,
+                    high: maxVal
+                },
+                axisX:{
+                    low: 0,
+                    high: 10
+                }
+            }
+            var barOptions = {
                 axisY: {
                     low: lowestVal,
                     high: maxVal
@@ -112,7 +112,10 @@ export default class Chart extends React.Component{
                         data.series[index] = docs
                     }
                 })
+
                 this.buildChart(chartData[0].plot, data, options)
+
+
             } else {
                 //We need mulitple charts
                 chartData.map((result, index) => {
@@ -127,13 +130,22 @@ export default class Chart extends React.Component{
                             data.series[0].push(Object.values(doc)[1])
                         })
                     }
-                    options.axisY = {
-                        low: lowestVal,
-                        high: maxVal,
-                        showLabel: false,
-                        showGrid: false,
+                    if(index > 0){
+                        options.axisY = {
+                            low: lowestVal,
+                            high: maxVal,
+                            showLabel: false,
+                            showGrid: false,
+                        }
+                        options.axisX = {
+                            showLabel: false,
+                            showGrid: false
+                        }
                     }
 
+                    if(chartData[0].plot==='bar'){
+                        options.axisY = barOptions
+                    }
                     this.buildChart(result.plot, data, options)
                 })
             }
@@ -146,19 +158,21 @@ export default class Chart extends React.Component{
         switch (type) {
             case "pie":
             let pieData = {series:data.series[0]}
-            chart = new Chartist.Pie('#Chart', pieData, {
+            chart = new Chartist.Pie('#PieChart', pieData, {
               height:400,
               donut: true,
               showLabel: false
             });
             break
             case "scatter":
-                chart = new Chartist['Line']('#ScatterChart', data, this.buildScatter());
+                options.showLine = false
+                chart = new Chartist['Line']('#ScatterChart', data, options);
                 break
             case "bar":
                 chart = new Chartist['Bar']('#BarChart', data, options);
                 break
             default:
+                options.showLine = true
                 chart = new Chartist['Line']('#LineChart', data, options);
                 break
         }

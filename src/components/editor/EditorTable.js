@@ -25,7 +25,7 @@ export default class EditorTable extends React.Component{
     }
     extractData(data){
         let newObj = data[0]
-        if(Object.keys(newObj).length === 1){
+        if(Object.keys(newObj).length === 1 && Array.isArray(Object.values(newObj)[0])){
             this.extractData(newObj)
         }
         if(Array.isArray(newObj)){
@@ -36,7 +36,7 @@ export default class EditorTable extends React.Component{
     }
     extractHeaders(data){
         let newObj = Array.isArray(data) ? data[0] : data
-        if(Object.keys(newObj).length === 1){
+        if(Object.keys(newObj).length === 1 && Array.isArray(Object.values(newObj)[0])){
             return this.extractHeaders(Object.values(newObj))
         }
         return Object.keys(newObj)

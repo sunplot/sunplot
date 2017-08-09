@@ -34,6 +34,16 @@ export default class Chart extends React.Component{
         })
         return isTrue
     }
+    isManyPlotTypes(data){
+        let isTrue = false
+        let plot  = data[0].plot
+        data.map((x) => {
+            if(x.plot !== plot){
+                isTrue = true
+            }
+        })
+        return isTrue
+    }
     getLow(item){
         let val = 0
         item.map((x) => {
@@ -60,8 +70,7 @@ export default class Chart extends React.Component{
     updateChart(props) {
         if(props.data){
             let chartData = props.data
-            let sample = chartData[0].data
-            if(!Array.isArray(sample)){
+            if(!Array.isArray(chartData[0].data)){
                 let formattedData = []
                 chartData.map((item) => {
                     formattedData.push(
@@ -84,7 +93,7 @@ export default class Chart extends React.Component{
                 }
             }
 
-            if(this.isLinearOnly(chartData)){
+            if(!this.isManyPlotTypes(chartData)){
                 //We only need on chart that plots multiple series
                 let data = {
                     labels: [],

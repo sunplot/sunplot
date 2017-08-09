@@ -34,7 +34,7 @@ export default class Chart extends React.Component{
         return isTrue
     }
     getLow(item){
-        let val = 0
+        let val = item[0].data[0][1]
         item.map((x) => {
             x.data.map((value) => {
                 if(value[1] < val){
@@ -45,7 +45,7 @@ export default class Chart extends React.Component{
         return val
     }
     getMax(item){
-        let val = 0
+        let val = item[0].data[0][1]
         item.map((x) => {
             x.data.map((value)=>{
                 if(value[1] > val){

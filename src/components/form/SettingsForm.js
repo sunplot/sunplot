@@ -97,15 +97,17 @@ class SettingsForm extends React.Component {
                     <br />
                     <br />
                     <FlatButton
-                      label="Save"
-                      primary={true}
-                      onTouchTap={this.handleSubmit.bind(this)}
-                    />
-                    <FlatButton
                       label="Cancel"
                       primary={true}
                       disabled={false}
+                      primary={false}
+                      secondary={true}
                       onTouchTap={this.props.handler}
+                    />
+                    <FlatButton
+                      label="Save"
+                      primary={true}
+                      onTouchTap={this.handleSubmit.bind(this)}
                     />
                 </form>
             </div>

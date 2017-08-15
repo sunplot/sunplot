@@ -2,9 +2,8 @@ import React from 'react'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import {cyan500,orange400,blueGrey500,grey200} from 'material-ui/styles/colors'
+import {cyan500,orange400,orange300,blueGrey500,grey200} from 'material-ui/styles/colors'
 import AppBar from 'material-ui/AppBar'
-import Sidebar from '../components/Sidebar'
 import Editor from '../components/editor/Editor'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import classnames from 'classnames'
@@ -21,6 +20,7 @@ const sunplotTheme = getMuiTheme({
         textColor: blueGrey500  ,
         primary1Color: orange400,
         accent1Color: cyan500,
+        primary2Color: orange300
     },
     bottomNavigation:{
         backgroundColor: grey200

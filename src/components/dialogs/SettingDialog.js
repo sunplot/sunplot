@@ -25,13 +25,18 @@ export default class SettingDialog extends React.Component {
 
 
     render() {
+        const customContentStyle = {
+            width: 400,
+            maxWidth: 'none',
+        }
         return (
             <IconButton label="Modal Dialog" onTouchTap={this.handler} style={{paddingTop:"20px"}} >
                 <SettingsIcon id="setting-cog" />
                 <Dialog id="settings-form"
                         title="Settings"
                         modal={true}
-                        open={this.state.open}>
+                        open={this.state.open}
+                        contentStyle={customContentStyle}>
                         <SettingsForm handler={this.handler.bind(this)}/>
                 </Dialog>
             </ IconButton>

@@ -17,6 +17,17 @@ import Chart from '../charts/Chart'
 import Divider from 'material-ui/Divider'
 import EditorTable from './EditorTable'
 import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
+const styles = {
+  smallIcon: {
+    width: 36,
+    height: 36,
+  },
+  small: {
+    width: 72,
+    height: 72,
+    padding: 16,
+  }
+};
 class EditorNav extends React.Component {
     constructor(props) {
         super(props);
@@ -40,8 +51,8 @@ class EditorNav extends React.Component {
                 <CSVLink data={this.props.data.docs} >
                     <IconButton tooltip="Export as CSV"
                         tooltipPosition="top-left"
-                        iconStyle={{width: 48,height: 48}}
-                        style={{ width: 96, height: 96,padding: 24}}>
+                        iconStyle={styles.smallIcon}
+                         style={styles.small}>
                         <ExportData style={{ marginRight: 24}} />
                     </IconButton>
                 </CSVLink>
@@ -56,7 +67,7 @@ class EditorNav extends React.Component {
             if(this.props.data.error){
                 return(
                 <Tabs>
-                    <Tab id="error-tab" label="Ooops..." style={{backgroundColor:"red"}} >
+                    <Tab id="error-tab" label="error" style={{backgroundColor:"red"}} >
                         <p style={{
                                         display: "inline-block",
                                         fontFamily: "Roboto, sans-serif",
@@ -75,9 +86,7 @@ class EditorNav extends React.Component {
         }
     }
     render(){
-
         return (
-
             <div>
                 <Toolbar>
                     <ToolbarGroup firstChild={true}>
@@ -90,9 +99,9 @@ class EditorNav extends React.Component {
                                 <IconButton
                                     tooltip={this.props.url}
                                     tooltipPosition="top-left"
-                                    iconStyle={{width: 48,height: 48}}
-                                    style={{ width: 96, height: 96,padding: 24}}
-                                    onTouchTap={this.copyToClipboard}>
+                                    onTouchTap={this.copyToClipboard}
+                                    iconStyle={styles.smallIcon}
+                                    style={styles.small}>
                                     <ActionHome style={{ marginRight: 24}} />
                                     <input id="copyurl"
                                         hidden="true" onCopy={this.handleCopy}

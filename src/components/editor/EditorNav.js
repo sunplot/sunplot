@@ -17,6 +17,8 @@ import Chart from '../charts/Chart'
 import Divider from 'material-ui/Divider'
 import EditorTable from './EditorTable'
 import ReactCopyButtonWrapper from 'react-copy-button-wrapper'
+import ErrorIcon from 'material-ui/svg-icons/alert/error-outline'
+
 const styles = {
   smallIcon: {
     width: 36,
@@ -67,8 +69,10 @@ class EditorNav extends React.Component {
             if(this.props.data.error){
                 return(
                 <Tabs>
-                    <Tab id="error-tab" label="error" style={{backgroundColor:"red"}} >
-                        <p style={{
+                    <Tab id="error-tab"
+                         icon={<ErrorIcon />}
+                         style={{backgroundColor:"red"}} >
+                         <p style={{
                                         display: "inline-block",
                                         fontFamily: "Roboto, sans-serif",
                                         textDecoration: "none",
@@ -78,7 +82,8 @@ class EditorNav extends React.Component {
                                         color: "red",
                                         alignItems:"center",
                                         justifyContent:"center",
-                                        color:"red"}}>{this.props.data.error}</p>
+                                        color:"red",
+                                        marginLeft:20}}>{this.props.data.error}</p>
                     </Tab>
                 </Tabs>)
             }

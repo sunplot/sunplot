@@ -41,14 +41,15 @@ class Editor extends React.Component{
 
         return(
             <div id="EditorView">
-                <div>
-                    <Paper>
+
+                <div style={{padding:"10px"}} >
+                    <Paper >
                         <CodeMirror value={this.state.query}
                             onChange={this.updateQuery.bind(this)}
-                            options={options} />
+                            options={options}
+                             />
                     </Paper>
                 </div>
-
                 <EditorNav
                            query={this.state.query}
                            editorMode={this.props.mode}

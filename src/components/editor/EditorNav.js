@@ -92,8 +92,8 @@ class EditorNav extends React.Component {
     }
     render(){
         return (
-            <div>
-                <Toolbar>
+            <div > 
+                <Toolbar style={{backgroundColor:"#fff"}}>
                     <ToolbarGroup firstChild={true}>
                         {this.displayTime()}
                     </ToolbarGroup>

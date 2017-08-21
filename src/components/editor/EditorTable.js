@@ -52,7 +52,10 @@ export default class EditorTable extends React.Component{
     }
     buildRowColumn(rowColData, index){
 
-        return <TableRowColumn key={"rowcol-" + index}>{rowColData.toString()}</TableRowColumn>
+        if(rowColData){
+            return <TableRowColumn key={"rowcol-" + index}>{rowColData.toString()}</TableRowColumn>
+        }
+
     }
 
     buildColumnHeader(data){

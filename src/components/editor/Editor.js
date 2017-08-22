@@ -42,7 +42,7 @@ class Editor extends React.Component{
         return(
             <div id="EditorView">
 
-                <div style={{padding:"10px"}} >
+                <div style={{paddingBottom:"10px"}} >
                     <Paper >
                         <CodeMirror value={this.state.query}
                             onChange={this.updateQuery.bind(this)}

@@ -90,9 +90,33 @@ class EditorNav extends React.Component {
             return <EditorResultsView data={this.props.data} isPlotable={isPlotable}/>
         }
     }
+    displayCopyUrl(){
+        if(this.props.data){
+            return(
+                <ReactCopyButtonWrapper text={encodeURI(this.props.url)}>
+                    <IconButton
+                        tooltip={this.props.url}
+                        tooltipPosition="top-left"
+                        onTouchTap={this.copyToClipboard}
+                        iconStyle={styles.smallIcon}
+                        style={styles.small}>
+                        <ActionHome style={{ marginRight: 24}} />
+                        <input id="copyurl"
+                            hidden="true" onCopy={this.handleCopy}
+                             />
+                    </IconButton>
+
+                </ReactCopyButtonWrapper>)
+        }
+    }
+    displaySeparator(){
+        if(this.props.data){
+            return (<ToolbarSeparator />)
+        }
+    }
     render(){
         return (
-            <div > 
+            <div >
                 <Toolbar style={{backgroundColor:"#fff"}}>
                     <ToolbarGroup firstChild={true}>
                         {this.displayTime()}
@@ -100,20 +124,8 @@ class EditorNav extends React.Component {
 
                     <ToolbarGroup>
                             {this.downloadCSV()}
-                            <ReactCopyButtonWrapper text={encodeURI(this.props.url)}>
-                                <IconButton
-                                    tooltip={this.props.url}
-                                    tooltipPosition="top-left"
-                                    onTouchTap={this.copyToClipboard}
-                                    iconStyle={styles.smallIcon}
-                                    style={styles.small}>
-                                    <ActionHome style={{ marginRight: 24}} />
-                                    <input id="copyurl"
-                                        hidden="true" onCopy={this.handleCopy}
-                                         />
-                                </IconButton>
-                            </ReactCopyButtonWrapper>
-                        <ToolbarSeparator />
+                            {this.displayCopyUrl()}
+                            {this.displaySeparator()}
                         <ExecuteQueryButton query={this.props.query}/>
                         <IconMenu iconButtonElement={<IconButton touch={true}></IconButton>}></IconMenu>
                     </ToolbarGroup>

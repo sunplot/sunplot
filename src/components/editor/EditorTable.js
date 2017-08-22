@@ -29,7 +29,7 @@ export default class EditorTable extends React.Component{
             this.extractData(newObj)
         }
         if(Array.isArray(newObj)){
-            return newObj
+            return Object.values(newObj)
         } else {
             return Object.values(newObj)
         }
@@ -46,12 +46,11 @@ export default class EditorTable extends React.Component{
         let size = fields.length
         if(size === 1){
             let extractedData = this.extractData(fields)
-            return <TableRow key={"trow-" + index}>{extractedData.map(this.buildRowColumn)}</TableRow>
+            return <TableRow key={"rowcol-" + index}><TableRowColumn key={"rowcol-" + index}>{extractedData}</TableRowColumn></TableRow>
         }
         return <TableRow key={"trow-" + index}>{fields.map(this.buildRowColumn)}</TableRow>
     }
     buildRowColumn(rowColData, index){
-
         if(rowColData){
             return <TableRowColumn key={"rowcol-" + index}>{rowColData.toString()}</TableRowColumn>
         }

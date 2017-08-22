@@ -25,7 +25,10 @@ class EditorResultsView extends React.Component {
 
     displayJSON(){
         if(this.props.data){
-            const jsonStyle = this.props.data.error ? {color:"red"} : {color:"black"}
+            const jsonStyle = {
+                paddingLeft:"10px",
+                color : this.props.data.error ? "red" : "black"
+            }
             return(
                 <div style={jsonStyle}>
                     {JSON.stringify(this.props.data.docs, null, 2) }

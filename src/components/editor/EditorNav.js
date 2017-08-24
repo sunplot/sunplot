@@ -93,7 +93,7 @@ class EditorNav extends React.Component {
     displayCopyUrl(){
         if(this.props.data){
             return(
-                <ReactCopyButtonWrapper text={encodeURI(this.props.url)}>
+                <ReactCopyButtonWrapper text={encodeURI(this.props.data.url)}>
                     <IconButton
                         tooltip={this.props.url}
                         tooltipPosition="top-left"

@@ -11,6 +11,7 @@
     "fetch": "^1.1.0",
     "material-ui": "^0.18.3",
     "node-cmd": "^3.0.0",
+    "npm-run-all": "^4.1.1",
     "react-bash": "^1.5.3",
     "react-codemirror": "^1.0.0",
     "react-copy-button-wrapper": "0.0.4",
@@ -39,10 +40,14 @@
     "react-addons-test-utils": "^15.6.0",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.7",
-    "sinon": "^3.2.0"
+    "sinon": "^3.2.0",
+    "babel-cli": "^6.24.1",
+    "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all --parallel react server",
+    "server": "nodemon --exec babel-node -- ./server.js",
+    "react": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha -w test/browser.js test/**/*.spec.js",
     "eject": "react-scripts eject"
